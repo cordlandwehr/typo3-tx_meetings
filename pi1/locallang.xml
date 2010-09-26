@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for plugin &quot;tx_fsmiprotocols_pi1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="meeting_id_invalid">Invalid Meeting ID</label>
+			<label index="next_meeting">Next Meeting</label>
+			<label index="previous_meeting">Previous Meeting</label>
+			<label index="overview">Overview</label>
+			<label index="to_overview">to Overview</label>
+			<label index="meeting-protocol">Meeting Protocol</label>
+			<label index="not_admitted_protocol">Meeting Protocol (unapproved)</label>
+			<label index="meeting_from">Meeting from</label>
+			<label index="title">Title</label>
+			<label index="date">Date</label>
+			<label index="time">Time</label>
+			<label index="place">Place</label>
+			<label index="committee">Committee</label>
+			<label index="resolution">Resolution</label>
+			<label index="resolutions">Resolutions</label>
+			<label index="documents">Documents</label>
+			<label index="meeting-documents">Meeting Documents</label>
+			<label index="agenda">Agenda</label>
+			<label index="preliminary_agenda">Preliminary Agenda</label>
+			<label index="file">File</label>
+			<label index="not_admitted">Unapproved</label>
+			<label index="access_denied">Access Denied</label>
+			<label index="protocol_as_pdf_descr">Here you can find the protocol as PDF:</label>
+			<label index="available_documents_descr">The following meeting documents are available.</label>
+			<label index="passed_resolutions_descr">The following resolutions were passed at this meeting.</label>
+			<label index="no_meeting_available">No Meeting Available</label>
+			<label index="no_meeting_available_long">There is no meeting of this committee.</label>
+			<label index="no_agenda">No Agenda</label>
+			<label index="no_agenda_long">There is no agenda available.</label>
+			<label index="no_protocol">No Protocol</label>
+			<label index="no_protocol_long">There is no meeting protocol available.</label>
+			<label index="no_documents">No Documents</label>
+			<label index="no_documents_long">There are no documents for this meeting.</label>
+			<label index="no_resolutions">No Resolutions</label>
+			<label index="no_resolutions_long">There are no resolutions concluded at this meeting.</label>
+			<label index="access_to_agenda">Access to Agenda</label>
+			<label index="access_to_agenda_denied_long">You do not have enough rights to access the agenda.</label>
+			<label index="access_to_preliminary_agenda">Access to Preliminary Agenda</label>
+			<label index="access_to_preliminary_agenda_denied_long">You do not have enough rights to access the preliminary agenda.</label>
+			<label index="access_to_protocol">Access to Protocol</label>
+			<label index="access_to_protocol_denied_long">You do not have enough rights to access the protocol.</label>
+			<label index="access_to_documents">Access to Documents</label>
+			<label index="access_to_documents_denied_long">You do not have enough rights to access the meeting documents.</label>
+			<label index="access_to_resolutions">Access to Resolutions</label>
+			<label index="access_to_resolutions_denied_long">You do not have enough rights to access the passed resolutions.</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="meeting_id_invalid">Ungültige Sitzungs-ID</label>
+			<label index="next_meeting">Nächste Sitzung</label>
+			<label index="previous_meeting">Vorherige Sitzung</label>
+			<label index="overview">Übersicht</label>
+			<label index="to_overview">zur Übersicht</label>
+			<label index="meeting-protocol">Sitzungsprotokoll</label>
+			<label index="not_admitted_protocol">Sitzungsprotokoll (ungenehmigt)</label>
+			<label index="meeting_from">Sitzung vom</label>
+			<label index="title">Titel</label>
+			<label index="date">Datum</label>
+			<label index="time">Uhrzeit</label>
+			<label index="place">Ort</label>
+			<label index="committee">Gremium</label>
+			<label index="resolution">Beschluss</label>
+			<label index="resolutions">Beschlüsse</label>
+			<label index="documents">Unterlagen</label>
+			<label index="meeting-documents">Sitzungsunterlagen</label>
+			<label index="agenda">Tagesordnung</label>
+			<label index="preliminary_agenda">Vorläufige Tagesordnung</label>
+			<label index="file">Datei</label>
+			<label index="not_admitted">Ungenehmigt</label>
+			<label index="access_denied">Kein Zugriff</label>
+			<label index="protocol_as_pdf_descr">Sie finden hier das Sitzungsprotokoll als PDF</label>
+			<label index="available_documents_descr">Die im Folgenden aufgeführten Dokumente wurden für diese Sitzung zur Verfügung gestellt.</label>
+			<label index="passed_resolutions_descr">Folgende Beschlüsse wurden auf diser Sitzung gefasst</label>
+			<label index="no_meeting_available">Keine Sitzung vorhanden</label>
+			<label index="no_meeting_available_long">Es liegt keine Sitzung dieses Gremiums vor.</label>
+			<label index="no_agenda">Keine Tagesordnung</label>
+			<label index="no_agenda_long">Es liegt keine Tagesordnung vor.</label>
+			<label index="no_protocol">Kein Protokoll</label>
+			<label index="no_protocol_long">Es liegt kein Protokoll vor.</label>
+			<label index="no_documents">Keine Unterlagen</label>
+			<label index="no_documents_long">Es liegen keine Unterlagen zu dieser Sitzung vor.</label>
+			<label index="no_resolutions">Keine Beschlüsse</label>
+			<label index="no_resolutions_long">Es liegen keine auf dieser Sitzung gefassten Beschlüsse vor.</label>
+			<label index="access_to_agenda">Zugriff auf die Tagesordnung</label>
+			<label index="access_to_agenda_denied_long">Sie haben nicht genügend Rechte um auf die Tagesordnung zuzugreifen.</label>
+			<label index="access_to_preliminary_agenda">Zugriff auf die vorläufige Tagesordnung</label>
+			<label index="access_to_preliminary_agenda_denied_long">Sie haben nicht genügend Rechte um auf die vorläufige Tagesordnung zuzugreifen.</label>
+			<label index="access_to_protocol">Zugriff auf das Protokoll</label>
+			<label index="access_to_protocol_denied_long">Sie haben nicht genügend Rechte um auf das Sitzungsprotokoll zuzugreifen.</label>
+			<label index="access_to_documents">Zugriff auf Sitzungsunterlagen</label>
+			<label index="access_to_documents_denied_long">Sie haben nicht genügend Rechte um auf die Sitzungsunterlagen zuzugreifen.</label>
+			<label index="access_to_resolutions">Zugriff auf Beschlüsse</label>
+			<label index="access_to_resolutions_denied_long">Sie haben nicht genügend Rechte um auf die gefassten Beschlüsse zuzugreifen.</label>
+		</languageKey>
+	</data>
+</T3locallang>

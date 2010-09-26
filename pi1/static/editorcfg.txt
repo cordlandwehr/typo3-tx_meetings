@@ -1,0 +1,135 @@
+
+plugin.tx_fsmiprotokolle_pi1.CSS_editor = Plugin: "tx_fsmiprotokolle_pi1"
+plugin.tx_fsmiprotokolle_pi1.CSS_editor.selector = .tx-fsmiprotokolle-pi1
+plugin.tx_fsmiprotokolle_pi1.CSS_editor.exampleWrap = <HR><strong>Plugin: "tx_fsmiprotokolle_pi1"</strong><HR><div class="tx-fsmiprotokolle-pi1"> | </div>
+plugin.tx_fsmiprotokolle_pi1.CSS_editor.ch {
+	P = Text
+	P.selector = P
+	P.attribs = BODYTEXT
+	P.example = <p>General text wrapped in &lt;P&gt;:<br />This is text <a href="#">with a link</a> in it. In principio creavit Deus caelum et terram terra autem erat inanis et vacua et tenebrae super faciem abyssi et spiritus...</p>
+	P.exampleStop = 1
+	P.ch.links = < CSS_editor.ch.A
+
+	H2 = Header 2
+	H2.selector = H2
+	H2.attribs = HEADER
+	H2.example = <H2>Header 2 example <a href="#"> with link</a></H2><p>Bodytext, Et praeessent diei ac nocti et dividerent lucem ac tenebras et vidit Deus quod esset bonum et factum est...</p>
+	H2.ch.links = < CSS_editor.ch.A
+	H2.exampleStop = 1
+
+	H3 = Header 3
+	H3.selector = H3
+	H3.attribs = HEADER
+	H3.example = <h3>Header 3 example <a href="#"> with link</a></h3><p>Bodytext, Et praeessent diei ac nocti et dividerent lucem ac tenebras et vidit Deus quod esset bonum et factum est...</p>
+	H3.ch.links = < CSS_editor.ch.A
+	H3.exampleStop = 1
+
+
+		## LISTING:
+	modeSelector = Mode selector
+	modeSelector.selector = .tx-fsmiprotokolle-pi1-modeSelector
+	modeSelector.example = <div class="tx-fsmiprotokolle-pi1-modeSelector"><table><tr><td class="tx-fsmiprotokolle-pi1-modeSelector-SCell"><p><a HREF="#">Mode 1 (S)</a></p></td><td><p><a HREF="#">Mode 2</a></p></td><td><p><a HREF="#">Mode 3</a></p></td></tr></table></div>
+	modeSelector.exampleStop = 1
+	modeSelector.ch.P < .P
+	modeSelector.ch.TABLE = Table
+	modeSelector.ch.TABLE.selector = TABLE
+	modeSelector.ch.TABLE.attribs = TABLE
+	modeSelector.ch.TD = Table cells
+	modeSelector.ch.TD.selector = TD
+	modeSelector.ch.TD.attribs = TD
+	modeSelector.ch.TD.ch {
+	  TD = Selected table cells
+	  TD.selector = + .tx-fsmiprotokolle-pi1-modeSelector-SCell
+	  TD.attribs = TD
+	}
+	modeSelector.ch.TD.ch.TD.ch.P < .P
+
+
+	browsebox = Browsing box
+	browsebox.selector = .tx-fsmiprotokolle-pi1-browsebox
+	browsebox.example = <div class="tx-fsmiprotokolle-pi1-browsebox"><p>Displaying results <span class="tx-fsmiprotokolle-pi1-browsebox-strong">1 to 3</span> out of <span class="tx-fsmiprotokolle-pi1-browsebox-strong">4</span></p><table><tr><td class="tx-fsmiprotokolle-pi1-browsebox-SCell"><p><a HREF="#">Page 1 (S)</a></p></td><td><p><a HREF="#">Page 2</a></p></td><td><p><a HREF="#">Next ></a></p></td></tr></table></div>
+	browsebox.exampleStop = 1
+	browsebox.ch.P < .P
+	browsebox.ch.P.ch.strong = Emphasized numbers
+	browsebox.ch.P.ch.strong {
+	  selector = SPAN.tx-fsmiprotokolle-pi1-browsebox-strong
+	  attribs = TEXT
+	}
+	browsebox.ch.TABLE = Table
+	browsebox.ch.TABLE.selector = TABLE
+	browsebox.ch.TABLE.attribs = TABLE
+	browsebox.ch.TD = Table cells
+	browsebox.ch.TD.selector = TD
+	browsebox.ch.TD.attribs = TD
+	browsebox.ch.TD.ch {
+	  TD = Selected table cells
+	  TD.selector = + .tx-fsmiprotokolle-pi1-browsebox-SCell
+	  TD.attribs = TD
+	}
+	browsebox.ch.TD.ch.P < .P
+	browsebox.ch.TD.ch.TD.ch.P < .P
+
+
+	searchbox = Search box
+	searchbox.selector = .tx-fsmiprotokolle-pi1-searchbox
+	searchbox.example = <div class="tx-fsmiprotokolle-pi1-searchbox"><table><form action="#" method="POST"><tr><td><input type="text" name="tx_fsmiprotokolle_pi1[sword]" value="Search word" class="tx-fsmiprotokolle-pi1-searchbox-sword"></td><td><input type="submit" value="Search" class="tx-fsmiprotokolle-pi1-searchbox-button"></td></tr></form></table></div>
+	searchbox.exampleStop = 1
+	searchbox.ch {
+		TABLE = Table
+		TABLE.selector = TABLE
+		TABLE.attribs = TABLE
+		TD = Table cells
+		TD.selector = TD
+		TD.attribs = TD
+		INPUT = Form fields
+		INPUT.selector = INPUT
+		INPUT.attribs = TEXT,background-color,width
+		INPUT.ch {
+			sword = Search word field
+			sword.selector = +.tx-fsmiprotokolle-pi1-searchbox-sword
+			sword.attribs = TEXT,background-color,width
+
+			button = Submit button
+			button.selector = +.tx-fsmiprotokolle-pi1-searchbox-button
+			button.attribs = TEXT,background-color,width
+		}
+	}
+	list = List display
+	list.selector = .tx-fsmiprotokolle-pi1-listrow
+	list.example = <div class="tx-fsmiprotokolle-pi1-listrow"><p>This is regular bodytext in the list display.</p><p>Viditque Deus cuncta quae fecit et erant valde bona et factum est vespere et mane dies sextus.</p></div>
+	list.exampleWrap = <div class="tx-fsmiprotokolle-pi1-listrow"> | </div>
+	list.ch.P < .P
+	list.ch.P.exampleStop = 0
+	list.ch.P.ch {
+		
+		P_0 = [listrowField-meeting-date]
+		P_0.selector = +.tx-fsmiprotokolle-pi1-listrowField-meeting-date
+		P_0.attribs = BODYTEXT
+		P_0.example = <p class="tx-fsmiprotokolle-pi1-listrowField-meeting-date">[listrowField-meeting-date] text <a href="#">with a link</a> in it.</p><p class="tx-fsmiprotokolle-pi1-listrowField-meeting-date">In principio creavit Deus caelum et terram terra autem erat inanis et vacua et tenebrae super faciem abyssi et spiritus...</p>
+		P_0.exampleStop = 1
+		P_0.ch.links = < CSS_editor.ch.A
+	}
+	single = Single display
+	single.selector = .tx-fsmiprotokolle-pi1-singleView
+	single.example = <div class="tx-fsmiprotokolle-pi1-singleView"><H2>Header, if any:</H2><p>This is regular bodytext in the list display.</p><p>Viditque Deus cuncta quae fecit et erant valde bona et factum est vespere et mane dies sextus.</p><p><a href="#">Back</a></p></div>
+	single.exampleWrap = <div class="tx-fsmiprotokolle-pi1-singleView"> | </div>
+	single.ch.P < .P
+	single.ch.P.exampleStop = 0
+	single.ch.P.ch {
+		
+		P_0 = [singleViewField-meeting-date]
+		P_0.selector = +.tx-fsmiprotokolle-pi1-singleViewField-meeting-date
+		P_0.attribs = BODYTEXT
+		P_0.example = <p class="tx-fsmiprotokolle-pi1-singleViewField-meeting-date">[singleViewField-meeting-date] text <a href="#">with a link</a> in it.</p><p class="tx-fsmiprotokolle-pi1-singleViewField-meeting-date">In principio creavit Deus caelum et terram terra autem erat inanis et vacua et tenebrae super faciem abyssi et spiritus...</p>
+		P_0.exampleStop = 1
+		P_0.ch.links = < CSS_editor.ch.A
+		
+		
+		P_1 = [singleViewField-protocol]
+		P_1.selector = +.tx-fsmiprotokolle-pi1-singleViewField-protocol
+		P_1.attribs = BODYTEXT
+		P_1.example = <p class="tx-fsmiprotokolle-pi1-singleViewField-protocol">[singleViewField-protocol] text <a href="#">with a link</a> in it.</p><p class="tx-fsmiprotokolle-pi1-singleViewField-protocol">In principio creavit Deus caelum et terram terra autem erat inanis et vacua et tenebrae super faciem abyssi et spiritus...</p>
+		P_1.exampleStop = 1
+		P_1.ch.links = < CSS_editor.ch.A
+	}
+}

@@ -1,0 +1,122 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:lang/locallang_core.php:labels.generalOptions</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<uidCommittee>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>Committee for which protocols shall be shown</label>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>tx_fsmiprotocols_committee_list</allowed>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<minitems>0</minitems>
+								<show_thumbs>1</show_thumbs>
+								</config>
+						</TCEforms>
+					</uidCommittee>
+					<fixViewYear>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>Fix View to this Year</label>
+							<config>
+								<type>input</type>
+								<size>4</size>
+								</config>
+						</TCEforms>
+					</fixViewYear>
+				</el>
+			</ROOT>
+		</sDEF>
+		<Display>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Display Options</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<ListViewType>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>Display format for protocol list</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="0"></numIndex>
+									<numIndex index="1"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">List View</numIndex>
+									<numIndex index="1">1</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">Table View</numIndex>
+									<numIndex index="1">2</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="0">Resolutions View</numIndex>
+									<numIndex index="1">3</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="0">Latest Meeting View</numIndex>
+									<numIndex index="1">4</numIndex>
+								</numIndex>
+								</items>
+								<minitems>0</minitems>
+								<maxitems>1</maxitems>
+								<size>1</size>
+							</config>
+						</TCEforms>
+					</ListViewType>
+					<ShowTitleElement>
+						<TCEforms>
+						<label>Show Title Element</label>
+						<config>
+							<type>check</type>
+						</config>
+						<default>1</default>
+						</TCEforms>
+					</ShowTitleElement>
+					<ShowAgendaElement>
+						<TCEforms>
+						<label>Show Agenda Element</label>
+						<config>
+							<type>check</type>
+						</config>
+						<default>1</default>
+						</TCEforms>
+					</ShowAgendaElement>
+					<ShowDocumentsElement>
+						<TCEforms>
+						<label>Show Documents Elements</label>
+						<config>
+							<type>check</type>
+						</config>
+						<default>1</default>
+						</TCEforms>
+					</ShowDocumentsElement>
+					<ShowResolutionsElement>
+						<TCEforms>
+						<label>Show Resolution Elements</label>
+						<config>
+							<type>check</type>
+						</config>
+						<default>1</default>
+						</TCEforms>
+					</ShowResolutionsElement>
+				</el>
+			</ROOT>
+		</Display>
+	</sheets>
+</T3DataStructure>

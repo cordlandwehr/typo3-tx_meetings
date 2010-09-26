@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;web_txfsmiprotocolsM1&quot; - header, description</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="mlang_tabs_tab">Protocol Backup</label>
+			<label index="mlang_labels_tabdescr">Update the country maps.</label>
+			<label index="mlang_labels_tablabel">Update the country maps.</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="mlang_tabs_tab">Eingabe Orga</label>
+			<label index="mlang_labels_tabdescr">Die Landkarten aktualisieren.</label>
+			<label index="mlang_labels_tablabel">Die Landkarten aktualisieren.</label>
+		</languageKey>
+	</data>
+</T3locallang>
