@@ -1,7 +1,7 @@
 #
-# Table structure for table 'tx_fsmiprotocols_list'
+# Table structure for table 'tx_meetings_list'
 #
-CREATE TABLE tx_fsmiprotocols_list (
+CREATE TABLE tx_meetings_list (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE tx_fsmiprotocols_list (
 );
 
 #
-# Table structure for table 'tx_fsmiprotocols_committee_list'
+# Table structure for table 'tx_meetings_committee_list'
 #
-CREATE TABLE tx_fsmiprotocols_committee_list (
+CREATE TABLE tx_meetings_committee_list (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -70,9 +70,9 @@ CREATE TABLE tx_fsmiprotocols_committee_list (
 
 
 #
-# Table structure for table 'tx_fsmiprotocols_documents'
+# Table structure for table 'tx_meetings_documents'
 #
-CREATE TABLE tx_fsmiprotocols_documents (
+CREATE TABLE tx_meetings_documents (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -94,9 +94,9 @@ CREATE TABLE tx_fsmiprotocols_documents (
 
 
 #
-# Table structure for table 'tx_fsmiprotocols_resolution'
+# Table structure for table 'tx_meetings_resolution'
 #
-CREATE TABLE tx_fsmiprotocols_resolution (
+CREATE TABLE tx_meetings_resolution (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -117,9 +117,9 @@ CREATE TABLE tx_fsmiprotocols_resolution (
 
 
 #
-# Table structure for table 'tx_fsmiprotocols_access_admission'
+# Table structure for table 'tx_meetings_access_admission'
 #
-CREATE TABLE tx_fsmiprotocols_access_admission (
+CREATE TABLE tx_meetings_access_admission (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,

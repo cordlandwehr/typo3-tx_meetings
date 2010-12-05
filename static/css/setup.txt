@@ -1,4 +1,4 @@
- plugin.tx_fsmi_vkrit {
+plugin.tx_meetings {
 	_CSS_DEFAULT_STYLE (
 		/* - - - - - - - - - - - - - - - - - - - - -
 
@@ -66,14 +66,14 @@
 			border-color: #dc4c42;
 		}
 
-		table.fsmiprotocols_table {
+		table.meetings_table {
 
 		}
 
-		tr.fsmiprotocols_row_odd {
+		tr.meetings_row_odd {
 			background-color: #eee;
 		}
-		tr.fsmiprotocols_row_even {
+		tr.meetings_row_even {
 			background-color: #fff;
 		}
  	)

@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * Module 'Organizer' for the 'studiesguide' extension.
+ * Module 'Backup' for the 'meetings' extension.
  *
  * @author	Andreas Cord-Landwehr <cola@uni-paderborn.de>
  */
@@ -34,20 +34,20 @@ unset($MCONF);
 require ("conf.php");
 require ($BACK_PATH."init.php");
 require ($BACK_PATH."template.php");
-$LANG->includeLLFile("EXT:fsmi_protocols/mod_backup/locallang.xml");
+$LANG->includeLLFile("EXT:meetings/mod_backup/locallang.xml");
 require_once (PATH_t3lib."class.t3lib_scbase.php");
 
-require_once(t3lib_extMgm::extPath('fsmi_protocols').'api/class.tx_fsmiprotocols_div.php');
+require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_div.php');
 
 
 $BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users has no permission for entry.
 	// DEFAULT initialization of a module [END]
 
-class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
+class tx_meetings_module_backup extends t3lib_SCbase {
 	var $TEMP_PATH = '/tmp';
 
-	const kRELATIVE_TAR_PATH = 'typo3temp/fsmiprotocols_tar/';
-	const kRELATIVE_TMP_PATH = 'typo3temp/fsmiprotocols_tmp/';
+	const kRELATIVE_TAR_PATH = 'typo3temp/meetings_tar/';
+	const kRELATIVE_TMP_PATH = 'typo3temp/meetings_tmp/';
 
 	const kVIEW_CREATE_BACKUPS = 1;
 
@@ -180,7 +180,7 @@ class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
 		$content .= '<tr><th>Meeting</th><th>Last Backup</th><th></th></tr>';
 		$committees = $this->getAllCommittees();
 		foreach ($committees as $committee) {
-			$committeeDATA = t3lib_BEfunc::getRecord('tx_fsmiprotocols_committee_list', $committee);
+			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $committee);
 			$content .= '<tr><td>'.$committeeDATA['committee_name'].'</td>';
 			$content .= '<td>'.$this->linkToMostRecentTar($committee).'</td>';
 			$content .= '<td><input type="checkbox" name="backup_this_committee['.$committeeDATA['uid'].']" checked="checked" /></td>';
@@ -199,50 +199,50 @@ class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
 	function createFilelist ($committee) {
 		// Make listing query, pass query to SQL database:
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
-												FROM tx_fsmiprotocols_list
+												FROM tx_meetings_list
 												WHERE
-													tx_fsmiprotocols_list.committee = '.$committee.'
-													AND tx_fsmiprotocols_list.deleted=0
-													AND tx_fsmiprotocols_list.hidden=0
-													AND tx_fsmiprotocols_list.pid > -1
+													tx_meetings_list.committee = '.$committee.'
+													AND tx_meetings_list.deleted=0
+													AND tx_meetings_list.hidden=0
+													AND tx_meetings_list.pid > -1
 												 ORDER BY meeting_date DESC'
 											);
 
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_fsmiprotocols_committee_list', $committee);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $committee);
 
 		$files = array();
 		while ($res && $meeting = mysql_fetch_assoc($res)) {
 			if ($meeting['protocol_pdf']!='')
 				$files[] = array
 					(
-						'old' => tx_fsmiprotocols_div::uploadFolder.$meeting['protocol_pdf'],
-						'new' => tx_fsmiprotocols_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).
+						'old' => tx_meetings_div::uploadFolder.$meeting['protocol_pdf'],
+						'new' => tx_meetings_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).
 										'/'.
 										$this->createMeetingFileTitleProtocol($meeting['uid'])
 					);
-			$documents = tx_fsmiprotocols_div::getDocumentsForMeeting($meeting['uid']);
+			$documents = tx_meetings_div::getDocumentsForMeeting($meeting['uid']);
 			$counter = 1;
 			foreach($documents as $document) {
 				// TODO check for non-pdfs!
-				$documentDATA = t3lib_BEfunc::getRecord('tx_fsmiprotocols_documents', $document);
+				$documentDATA = t3lib_BEfunc::getRecord('tx_meetings_documents', $document);
 				if ($documentDATA['document_file']=='')
 					continue;
 				$files[] = array (
-					'old' => tx_fsmiprotocols_div::uploadFolder.$documentDATA['document_file'],
-					'new' => tx_fsmiprotocols_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).'/'.
+					'old' => tx_meetings_div::uploadFolder.$documentDATA['document_file'],
+					'new' => tx_meetings_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).'/'.
 						strftime('%Y-%m-%d', $meeting['meeting_date']).'/'.
 						'document_'.$counter.'_'.$this->stringToFilename($documentDATA['name']).'.pdf'
 				);
 				$counter++;
 			}
-			$resolutions = tx_fsmiprotocols_div::getResolutionsForMeeting($meeting['uid']);
+			$resolutions = tx_meetings_div::getResolutionsForMeeting($meeting['uid']);
 			foreach($resolutions as $resolution) {
-				$resolutionDATA = t3lib_BEfunc::getRecord('tx_fsmiprotocols_resolution', $resolution);
+				$resolutionDATA = t3lib_BEfunc::getRecord('tx_meetings_resolution', $resolution);
 				if ($resolutionDATA['resolution_pdf']=='')
 					continue;
 				$files[] = array (
-					'old' => tx_fsmiprotocols_div::uploadFolder.$resolutionDATA['resolution_pdf'],
-					'new' => tx_fsmiprotocols_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).'/'.
+					'old' => tx_meetings_div::uploadFolder.$resolutionDATA['resolution_pdf'],
+					'new' => tx_meetings_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).'/'.
 						strftime('%Y-%m-%d', $meeting['meeting_date']).'/'.
 						'resolution_'.
 							$this->stringToFilename($resolutionDATA['resolution_id']).'_'.
@@ -255,7 +255,7 @@ class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
 	}
 
 	function createMeetingFileTitleProtocol($meetingUID) {
-		$meetingDATA = t3lib_BEfunc::getRecord('tx_fsmiprotocols_list', $meetingUID);
+		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meetingUID);
 
 		// configure protocol title
 		// the '0' is needed since there was a bug in the sql table...
@@ -272,7 +272,7 @@ class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
 
 	function getAllCommittees() {
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT uid
-												FROM tx_fsmiprotocols_committee_list
+												FROM tx_meetings_committee_list
 												WHERE
 													deleted=0 AND hidden=0
 												ORDER BY committee_name'
@@ -310,7 +310,7 @@ class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
 	}
 
 	function createTarNameForCommittee($committee) {
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_fsmiprotocols_committee_list', intval($committee));
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', intval($committee));
 		$tarName = $committeeDATA['committee_name'].'_'.
 			$this->stringToFilename($committeeDATA['committee_name']).'.tar.gz';
 
@@ -352,15 +352,15 @@ class tx_fsmiprotocols_module_backup extends t3lib_SCbase {
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/fsmi_protocols/mod_backup/index.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/fsmi_protocols/mod_backup/index.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/mod_backup/index.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/mod_backup/index.php']);
 }
 
 
 
 
 // Make instance:
-$SOBE = t3lib_div::makeInstance('tx_fsmiprotocols_module_backup');
+$SOBE = t3lib_div::makeInstance('tx_meetings_module_backup');
 $SOBE->init();
 
 // Include files?

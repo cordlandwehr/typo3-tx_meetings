@@ -1,12 +1,12 @@
 <?php
 if (!defined ('TYPO3_MODE'))     die ('Access denied.');
 
-$TCA["tx_fsmiprotocols_list"] = array (
-    "ctrl" => $TCA["tx_fsmiprotocols_list"]["ctrl"],
+$TCA["tx_meetings_list"] = array (
+    "ctrl" => $TCA["tx_meetings_list"]["ctrl"],
     "interface" => array (
         "showRecordFieldList" => "hidden,meeting_date,not_admitted,protocol_name,protocol"
     ),
-    "feInterface" => $TCA["tx_fsmiprotocols_list"]["feInterface"],
+    "feInterface" => $TCA["tx_meetings_list"]["feInterface"],
     "columns" => array (
         't3ver_label' => array (
             'label'  => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
@@ -26,19 +26,19 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
 		'type' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.type',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.type',
 			'config' => array (
 				'type' => 'select',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.type.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.type.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.type.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.type.I.1', '1'),
 				),
 				'default' => '1'
 			)
 		),
         "meeting_date" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.meeting_date",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.meeting_date",
             "config" => Array (
                 "type"     => "input",
                 "size"     => "8",
@@ -50,7 +50,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
         "meeting_time" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.meeting_time",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.meeting_time",
             "config" => Array (
                 "type"     => "input",
                 "size"     => "8",
@@ -62,7 +62,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
         "meeting_room" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.meeting_room",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.meeting_room",
             "config" => Array (
                 "type"     => "input",
                 "size"     => "20",
@@ -71,7 +71,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
         "sticky_date" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.sticky_date",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.sticky_date",
             "config" => Array (
                 "type"     => "input",
                 "size"     => "4",
@@ -83,7 +83,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
 		'agenda' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.agenda',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.agenda',
 			"config" => Array (
 				"type" => "text",
 				"cols" => "48",
@@ -103,7 +103,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
         'agenda_preliminary' => array (
             'exclude' => 1,
-            'label'   => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.agenda_preliminary',
+            'label'   => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.agenda_preliminary',
             'config'  => array (
                 'type'    => 'check',
                 'default' => '0'
@@ -111,7 +111,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
 		"protocol_name" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.protocol_name",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.protocol_name",
 			"config" => Array (
 				"type"     => "input",
 				"size"     => "20",
@@ -120,7 +120,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
         "protocol" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.protocol",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.protocol",
             "config" => Array (
                 "type" => "text",
                 "wrap" => "OFF",
@@ -130,13 +130,13 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
 		"protocol_pdf" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.protocol_pdf",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.protocol_pdf",
 			"config" => Array (
 				"type" => "group",
 				"internal_type" => "file",
 				"allowed" => "pdf",
 				"max_size" => 20000,
-				"uploadfolder" => "uploads/tx_fsmiprotocols",
+				"uploadfolder" => "uploads/tx_meetings",
 				"show_thumbs" => 1,
 				"size" => 1,
 				"minitems" => 0,
@@ -145,10 +145,10 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
 		"documents" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents",
 			"config" => Array (
 				"type" => "inline",
-				"foreign_table" => "tx_fsmiprotocols_documents",
+				"foreign_table" => "tx_meetings_documents",
 				"foreign_field" => "protocol",
 				"foreign_table_field" => "protocol_tablename",
 				"appearance" => Array (
@@ -161,10 +161,10 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
 		"resolutions" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_resolution",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_resolution",
 			"config" => Array (
 				"type" => "inline",
-				"foreign_table" => "tx_fsmiprotocols_resolution",
+				"foreign_table" => "tx_meetings_resolution",
 				"foreign_field" => "protocol",
 				"foreign_table_field" => "protocol_tablename",
 				"appearance" => Array (
@@ -177,7 +177,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
         'not_admitted' => array (
             'exclude' => 1,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.not_admitted",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.not_admitted",
             'config'  => array (
                 'type'    => 'check',
                 'default' => '0'
@@ -185,7 +185,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
         ),
 		"reviewer_a" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.reviewer_a",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.reviewer_a",
 			"config" => Array (
 				"type" => "select",
 				"foreign_table" => "fe_users",
@@ -197,7 +197,7 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
 		"reviewer_b" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.reviewer_b",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.reviewer_b",
 			"config" => Array (
 				"type" => "select",
 				"foreign_table" => "fe_users",
@@ -209,11 +209,11 @@ $TCA["tx_fsmiprotocols_list"] = array (
 		),
 		"committee" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list.committee",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.committee",
 			"config" => Array (
 				"type" => "select",
-				"foreign_table" => "tx_fsmiprotocols_committee_list",
-//				"foreign_table_where" => "AND tx_fsmiprotocols_committee_list.pid=###STORAGE_PID### ORDER BY tx_fsmiprotocols_committee_list.uid",
+				"foreign_table" => "tx_meetings_committee_list",
+//				"foreign_table_where" => "AND tx_meetings_committee_list.pid=###STORAGE_PID### ORDER BY tx_meetings_committee_list.uid",
 				"size" => 1,
 				"minitems" => 0,
 				"maxitems" => 1,
@@ -229,12 +229,12 @@ $TCA["tx_fsmiprotocols_list"] = array (
     )
 );
 
-$TCA["tx_fsmiprotocols_committee_list"] = array (
-    "ctrl" => $TCA["tx_fsmiprotocols_committee_list"]["ctrl"],
+$TCA["tx_meetings_committee_list"] = array (
+    "ctrl" => $TCA["tx_meetings_committee_list"]["ctrl"],
     "interface" => array (
         "showRecordFieldList" => "hidden,committee_name"
     ),
-    "feInterface" => $TCA["tx_fsmiprotocols_list"]["feInterface"],
+    "feInterface" => $TCA["tx_meetings_list"]["feInterface"],
     "columns" => array (
         'hidden' => array (
             'exclude' => 1,
@@ -246,7 +246,7 @@ $TCA["tx_fsmiprotocols_committee_list"] = array (
         ),
 		"committee_name" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.committee_name",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.committee_name",
 			"config" => Array (
 				"type"     => "input",
 				"size"     => "20",
@@ -254,111 +254,111 @@ $TCA["tx_fsmiprotocols_committee_list"] = array (
 		),
 		'disclosure' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.disclosure',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.disclosure',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.disclosure.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.disclosure.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.disclosure.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.disclosure.I.1', '1'),
 				),
 			)
 		),
 		'term' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.term',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.term',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.term.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.term.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.term.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.term.I.1', '1'),
 				),
 				"default" => 0,
 			)
 		),
 		'access_level_agendas' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level_agendas',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_agendas',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_agendas_preliminary' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level_agendas_preliminary',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_agendas_preliminary',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_protocols' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level_protocols',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_protocols',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_protocols_preliminary' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level_protocols_preliminary',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_protocols_preliminary',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_documents' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level_documents',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_documents',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_resolutions' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level_resolutions',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_resolutions',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
 				),
 			)
 		),
 		"access_admissions" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission",
 			"config" => Array (
 				"type" => "inline",
-				"foreign_table" => "tx_fsmiprotocols_access_admission",
+				"foreign_table" => "tx_meetings_access_admission",
 				"foreign_field" => "committee",
 				"foreign_table_field" => "committee_tablename",
 				"appearance" => Array (
@@ -371,7 +371,7 @@ $TCA["tx_fsmiprotocols_committee_list"] = array (
 		),
 		"storage_pid" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.storage_pid",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.storage_pid",
 			"config" => Array (
 				"type" => "group",
 				"internal_type" => 'db',
@@ -391,12 +391,12 @@ $TCA["tx_fsmiprotocols_committee_list"] = array (
 );
 
 
-$TCA['tx_fsmiprotocols_documents'] = array (
-	'ctrl' => $TCA['tx_fsmiprotocols_documents']['ctrl'],
+$TCA['tx_meetings_documents'] = array (
+	'ctrl' => $TCA['tx_meetings_documents']['ctrl'],
 	'interface' => array (
 		'showRecordFieldList' => 'hidden,name,description,document_file'
 	),
-	'feInterface' => $TCA['tx_fsmiprotocols_documents']['feInterface'],
+	'feInterface' => $TCA['tx_meetings_documents']['feInterface'],
 	'columns' => array (
 		'hidden' => array (
 			'exclude' => 1,
@@ -408,11 +408,11 @@ $TCA['tx_fsmiprotocols_documents'] = array (
 		),
 		"protocol" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list",
 			"config" => Array (
 				"type" => "select",
-				"foreign_table" => "tx_fsmiprotocols_list",
-				"foreign_table_where" => " ORDER BY tx_fsmiprotocols_list.date ",
+				"foreign_table" => "tx_meetings_list",
+				"foreign_table_where" => " ORDER BY tx_meetings_list.date ",
 				"size" => 1,
 				"minitems" => 0,
 				"maxitems" => 1,
@@ -425,12 +425,12 @@ $TCA['tx_fsmiprotocols_documents'] = array (
 				"type" => "input",
 				"size" => 4,
 				"max" => 255,
-				"default" => 'tx_fsmiprotocols_list'
+				"default" => 'tx_meetings_list'
 			)
 		),
 		'name' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.name',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.name',
 			'config' => array (
 				'type' => 'input',
 				'size' => '30',
@@ -439,7 +439,7 @@ $TCA['tx_fsmiprotocols_documents'] = array (
 		),
 		'description' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.description',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.description',
             "config" => Array (
                 "type" => "text",
                 "wrap" => "OFF",
@@ -449,13 +449,13 @@ $TCA['tx_fsmiprotocols_documents'] = array (
 		),
 		"document_file" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.document_file",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.document_file",
 			"config" => Array (
 				"type" => "group",
 				"internal_type" => "file",
 				"allowed" => "odt,rtf,jpg,pdf,txt,doc,xls",
 				"max_size" => 20000,
-				"uploadfolder" => "uploads/tx_fsmiprotocols",
+				"uploadfolder" => "uploads/tx_meetings",
 				"show_thumbs" => 1,
 				"size" => 1,
 				"minitems" => 0,
@@ -464,14 +464,14 @@ $TCA['tx_fsmiprotocols_documents'] = array (
 		),
         'access_level' => array (
             'exclude' => 1,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.access_level",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.access_level",
             'config'  => array (
                 'type'    => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.access_level.I.0', '0'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.access_level.I.2', '2'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_documents.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_documents.access_level.I.3', '3'),
 				),
 				'default' => '0'
             )
@@ -486,12 +486,12 @@ $TCA['tx_fsmiprotocols_documents'] = array (
 );
 
 
-$TCA['tx_fsmiprotocols_resolution'] = array (
-	'ctrl' => $TCA['tx_fsmiprotocols_resolution']['ctrl'],
+$TCA['tx_meetings_resolution'] = array (
+	'ctrl' => $TCA['tx_meetings_resolution']['ctrl'],
 	'interface' => array (
 		'showRecordFieldList' => 'hidden,name,resolution_id,resolution_text'
 	),
-	'feInterface' => $TCA['tx_fsmiprotocols_documents']['feInterface'],
+	'feInterface' => $TCA['tx_meetings_documents']['feInterface'],
 	'columns' => array (
 		'hidden' => array (
 			'exclude' => 1,
@@ -503,11 +503,11 @@ $TCA['tx_fsmiprotocols_resolution'] = array (
 		),
 		"protocol" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_list",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list",
 			"config" => Array (
 				"type" => "select",
-				"foreign_table" => "tx_fsmiprotocols_list",
-				"foreign_table_where" => " ORDER BY tx_fsmiprotocols_list.date ",
+				"foreign_table" => "tx_meetings_list",
+				"foreign_table_where" => " ORDER BY tx_meetings_list.date ",
 				"size" => 1,
 				"minitems" => 0,
 				"maxitems" => 1,
@@ -520,12 +520,12 @@ $TCA['tx_fsmiprotocols_resolution'] = array (
 				"type" => "input",
 				"size" => 4,
 				"max" => 255,
-				"default" => 'tx_fsmiprotocols_list'
+				"default" => 'tx_meetings_list'
 			)
 		),
 		'resolution_id' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_resolution.resolution_id',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_resolution.resolution_id',
 			'config' => array (
 				'type' => 'input',
 				'size' => '30',
@@ -533,7 +533,7 @@ $TCA['tx_fsmiprotocols_resolution'] = array (
 		),
 		'name' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_resolution.name',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_resolution.name',
 			'config' => array (
 				'type' => 'input',
 				'size' => '30',
@@ -541,7 +541,7 @@ $TCA['tx_fsmiprotocols_resolution'] = array (
 		),
 		'resolution_text' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_resolution.resolution_text',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_resolution.resolution_text',
 			"config" => Array (
 				"type" => "text",
 				"cols" => "48",
@@ -561,13 +561,13 @@ $TCA['tx_fsmiprotocols_resolution'] = array (
 		),
 		"resolution_pdf" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_resolution.resolution_pdf",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_resolution.resolution_pdf",
 			"config" => Array (
 				"type" => "group",
 				"internal_type" => "file",
 				"allowed" => "pdf",
 				"max_size" => 20000,
-				"uploadfolder" => "uploads/tx_fsmiprotocols",
+				"uploadfolder" => "uploads/tx_meetings",
 				"show_thumbs" => 1,
 				"size" => 1,
 				"minitems" => 0,
@@ -583,12 +583,12 @@ $TCA['tx_fsmiprotocols_resolution'] = array (
 	)
 );
 
-$TCA['tx_fsmiprotocols_access_admission'] = array (
-	'ctrl' => $TCA['tx_fsmiprotocols_access_admission']['ctrl'],
+$TCA['tx_meetings_access_admission'] = array (
+	'ctrl' => $TCA['tx_meetings_access_admission']['ctrl'],
 	'interface' => array (
 		'showRecordFieldList' => 'hidden,name,resolution_id,resolution_text'
 	),
-	'feInterface' => $TCA['tx_fsmiprotocols_access_admission']['feInterface'],
+	'feInterface' => $TCA['tx_meetings_access_admission']['feInterface'],
 	'columns' => array (
 		'hidden' => array (
 			'exclude' => 1,
@@ -600,11 +600,11 @@ $TCA['tx_fsmiprotocols_access_admission'] = array (
 		),
 		"committee" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list",
 			"config" => Array (
 				"type" => "select",
-				"foreign_table" => "tx_fsmiprotocols_committee_list",
-				"foreign_table_where" => " ORDER BY tx_fsmiprotocols_committee_list.date ",
+				"foreign_table" => "tx_meetings_committee_list",
+				"foreign_table_where" => " ORDER BY tx_meetings_committee_list.date ",
 				"size" => 1,
 				"minitems" => 0,
 				"maxitems" => 1,
@@ -617,12 +617,12 @@ $TCA['tx_fsmiprotocols_access_admission'] = array (
 				"type" => "input",
 				"size" => 4,
 				"max" => 255,
-				"default" => 'tx_fsmiprotocols_committee_list'
+				"default" => 'tx_meetings_committee_list'
 			)
 		),
 		'name' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission.name',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.name',
 			'config' => array (
 				'type' => 'input',
 				'size' => '30',
@@ -630,7 +630,7 @@ $TCA['tx_fsmiprotocols_access_admission'] = array (
 		),
 		"ip_range" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission.ip_range",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.ip_range",
 			"config" => Array (
 				"type"     => "input",
 				"size"     => "15",
@@ -639,7 +639,7 @@ $TCA['tx_fsmiprotocols_access_admission'] = array (
 		),
 		"usergroup" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission.usergroup",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.usergroup",
 			"config" => Array (
 				"type" => "select",
 				"foreign_table" => "fe_groups",
@@ -651,18 +651,18 @@ $TCA['tx_fsmiprotocols_access_admission'] = array (
 		),
 		'access_level' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission.access_level',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.access_level',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
 				),
 			)
 		),
         "applies_until" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission.applies_until",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.applies_until",
             "config" => Array (
                 "type"     => "input",
                 "size"     => "8",
@@ -674,7 +674,7 @@ $TCA['tx_fsmiprotocols_access_admission'] = array (
         ),
         "applies_from" => Array (
             "exclude" => 0,
-            "label" => "LLL:EXT:fsmi_protocols/locallang_db.xml:tx_fsmiprotocols_access_admission.applies_from",
+            "label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.applies_from",
             "config" => Array (
                 "type"     => "input",
                 "size"     => "8",
