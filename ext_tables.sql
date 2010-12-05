@@ -44,7 +44,7 @@ CREATE TABLE tx_meetings_list (
 #
 # Table structure for table 'tx_meetings_committee_list'
 #
-CREATE TABLE tx_meetings_committee_list (
+CREATE TABLE tx_meetings_committee (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,

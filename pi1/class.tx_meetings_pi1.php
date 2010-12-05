@@ -217,7 +217,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 												tx_meetings_list.committee = '.$this->committee.'
 												AND tx_meetings_list.deleted=0
 												AND tx_meetings_list.hidden=0
-												AND tx_meetings_list.pid > 0
+												AND tx_meetings_list.pid > -1
 											  ORDER BY meeting_date DESC'
 										);
 		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $this->committee);

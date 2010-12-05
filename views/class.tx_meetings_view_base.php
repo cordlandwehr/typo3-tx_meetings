@@ -168,7 +168,9 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 											FROM tx_meetings_list
 											WHERE
 												tx_meetings_list.committee = '.$this->committee.'
-												AND tx_meetings_list.deleted=0 AND tx_meetings_list.hidden=0
+												AND tx_meetings_list.deleted=0
+												AND tx_meetings_list.hidden=0
+												AND tx_meetings_list.pid >= 0
 											  ORDER BY meeting_date DESC'
 										);
 
@@ -230,6 +232,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 												tx_meetings_list.committee = '.$this->committee.'
 												AND tx_meetings_list.deleted=0 AND tx_meetings_list.hidden=0
 												AND meeting_date<'.$protocolDATA['meeting_date'].'
+												AND pid >= 0
 											  ORDER BY meeting_date DESC'
 										);
 		if($res && $protocol = mysql_fetch_assoc($res)) {
@@ -250,6 +253,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 												tx_meetings_list.committee = '.$this->committee.'
 												AND tx_meetings_list.deleted=0 AND tx_meetings_list.hidden=0
 												AND meeting_date>'.$protocolDATA['meeting_date'].'
+												AND pid >= 0
 											  ORDER BY meeting_date ASC'
 										);
 		if($res && $protocol = mysql_fetch_assoc($res)) {
