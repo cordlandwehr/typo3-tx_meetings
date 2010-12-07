@@ -212,8 +212,8 @@ $TCA["tx_meetings_list"] = array (
 			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_list.committee",
 			"config" => Array (
 				"type" => "select",
-				"foreign_table" => "tx_meetings_committee_list",
-//				"foreign_table_where" => "AND tx_meetings_committee_list.pid=###STORAGE_PID### ORDER BY tx_meetings_committee_list.uid",
+				"foreign_table" => "tx_meetings_committee",
+//				"foreign_table_where" => "AND tx_meetings_committee.pid=###STORAGE_PID### ORDER BY tx_meetings_committee.uid",
 				"size" => 1,
 				"minitems" => 0,
 				"maxitems" => 1,
@@ -229,8 +229,8 @@ $TCA["tx_meetings_list"] = array (
     )
 );
 
-$TCA["tx_meetings_committee_list"] = array (
-    "ctrl" => $TCA["tx_meetings_committee_list"]["ctrl"],
+$TCA["tx_meetings_committee"] = array (
+    "ctrl" => $TCA["tx_meetings_committee"]["ctrl"],
     "interface" => array (
         "showRecordFieldList" => "hidden,committee_name"
     ),
@@ -246,7 +246,7 @@ $TCA["tx_meetings_committee_list"] = array (
         ),
 		"committee_name" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.committee_name",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.committee_name",
 			"config" => Array (
 				"type"     => "input",
 				"size"     => "20",
@@ -254,102 +254,102 @@ $TCA["tx_meetings_committee_list"] = array (
 		),
 		'disclosure' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.disclosure',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.disclosure',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.disclosure.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.disclosure.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.disclosure.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.disclosure.I.1', '1'),
 				),
 			)
 		),
 		'term' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.term',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.term',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.term.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.term.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.term.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.term.I.1', '1'),
 				),
 				"default" => 0,
 			)
 		),
 		'access_level_agendas' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_agendas',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level_agendas',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_agendas_preliminary' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_agendas_preliminary',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level_agendas_preliminary',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_protocols' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_protocols',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level_protocols',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_protocols_preliminary' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_protocols_preliminary',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level_protocols_preliminary',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_documents' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_documents',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level_documents',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.3', '3'),
 				),
 			)
 		),
 		'access_level_resolutions' => array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level_resolutions',
+			'label' => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level_resolutions',
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.0', '0'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.3', '3'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.0', '0'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.3', '3'),
 				),
 			)
 		),
@@ -371,7 +371,7 @@ $TCA["tx_meetings_committee_list"] = array (
 		),
 		"storage_pid" => Array (
 			"exclude" => 1,
-			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.storage_pid",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.storage_pid",
 			"config" => Array (
 				"type" => "group",
 				"internal_type" => 'db',
@@ -600,11 +600,11 @@ $TCA['tx_meetings_access_admission'] = array (
 		),
 		"committee" => Array (
 			"exclude" => 0,
-			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list",
+			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee",
 			"config" => Array (
 				"type" => "select",
-				"foreign_table" => "tx_meetings_committee_list",
-				"foreign_table_where" => " ORDER BY tx_meetings_committee_list.date ",
+				"foreign_table" => "tx_meetings_committee",
+				"foreign_table_where" => " ORDER BY tx_meetings_committee.date ",
 				"size" => 1,
 				"minitems" => 0,
 				"maxitems" => 1,
@@ -617,7 +617,7 @@ $TCA['tx_meetings_access_admission'] = array (
 				"type" => "input",
 				"size" => 4,
 				"max" => 255,
-				"default" => 'tx_meetings_committee_list'
+				"default" => 'tx_meetings_committee'
 			)
 		),
 		'name' => array (
@@ -655,8 +655,8 @@ $TCA['tx_meetings_access_admission'] = array (
 			'config' => array (
 				'type' => 'radio',
 				'items' => array (
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.1', '1'),
-					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list.access_level.I.2', '2'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.1', '1'),
+					array('LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee.access_level.I.2', '2'),
 				),
 			)
 		),

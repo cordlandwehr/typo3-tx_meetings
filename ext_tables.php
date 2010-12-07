@@ -31,9 +31,9 @@ $TCA["tx_meetings_list"] = array (
     )
 );
 
-$TCA["tx_meetings_committee_list"] = array (
+$TCA["tx_meetings_committee"] = array (
     "ctrl" => array (
-        'title'     => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee_list',
+        'title'     => 'LLL:EXT:meetings/locallang_db.xml:tx_meetings_committee',
         'label'     => 'committee_name',
         'tstamp'    => 'tstamp',
         'crdate'    => 'crdate',
