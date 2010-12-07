@@ -156,7 +156,7 @@ class tx_meetings_pi2 extends tslib_pibase {
 												WHERE
 													tx_meetings_list.committee = '.intval($committee).'
 													AND tx_meetings_list.deleted=0
-													AND tx_meetings_list.pid > 0
+													AND tx_meetings_list.pid >= 0
 												 ORDER BY meeting_date DESC');
 
 		$content .= '<h2>Protokolle</h2>';
