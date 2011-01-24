@@ -1,8 +1,9 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
-t3lib_extMgm::addUserTSConfig('
-	options.saveDocNew.tx_meetings_list=1
-');
+// FOLLOWING makes problems with old Typo3
+//t3lib_extMgm::addUserTSConfig('
+//	options.saveDocNew.tx_meetings_list=1
+//');
 
   ## Extending TypoScript from static template uid=43 to set up userdefined tag:
 t3lib_extMgm::addTypoScript($_EXTKEY,'editorcfg','

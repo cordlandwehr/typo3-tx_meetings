@@ -65,7 +65,7 @@ class tx_meetings_pi2 extends tslib_pibase {
 		$this->pi_checkCHash = TRUE;
 
 		$this->committee = intval($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'uidCommittee'));
-		$committeeDB = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $this->committee);
+		$committeeDB = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);
 		$this->storePidNew = $committeeDB['storage_pid'];
 
 		$content = '';
@@ -96,7 +96,7 @@ class tx_meetings_pi2 extends tslib_pibase {
 	function listAll ($committee) {
 		$content = '';
 		$protocolPost = t3lib_div::_POST($this->extKey);
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $committee);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $committee);
 
 		// test if there are post variables for new protocol
 		if (t3lib_div::_POST('protocol_new')) {
@@ -334,7 +334,7 @@ class tx_meetings_pi2 extends tslib_pibase {
 		$content .= '<h3>Veröffentlichung</h3>';
 
 		// initial disclosure settings
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $committeeUid);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $committeeUid);
 		$content .= '<table>';
 		if ($committeeDATA['disclosure']==tx_meetings_div::kDISCLOSURE_REVIEWERS) {
 			// reviewer A
@@ -368,7 +368,7 @@ class tx_meetings_pi2 extends tslib_pibase {
 
 		// get protocol data from database
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUid);
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $protocolDATA['committee']);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $protocolDATA['committee']);
 
 		$content .= '<h2>Protokoll editieren</h2>';
 		$content .= '<div><i>'.$this->pi_linkTP('zurück zur Übersicht').'</i></div>';
