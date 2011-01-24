@@ -104,7 +104,7 @@ class tx_meetings_access {
 	}
 
 	private function initAccessLevels() {
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $this->committeeUID);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committeeUID);
 		$this->dataAccessLevels['access_level_agendas'] = $committeeDATA['access_level_agendas'];
 		$this->dataAccessLevels['access_level_agendas_preliminary'] = $committeeDATA['access_level_agendas_preliminary'];
 		$this->dataAccessLevels['access_level_protocols'] = $committeeDATA['access_level_protocols'];
