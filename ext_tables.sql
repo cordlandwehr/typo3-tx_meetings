@@ -42,7 +42,7 @@ CREATE TABLE tx_meetings_list (
 );
 
 #
-# Table structure for table 'tx_meetings_committee_list'
+# Table structure for table 'tx_meetings_committee'
 #
 CREATE TABLE tx_meetings_committee (
 	uid int(11) NOT NULL auto_increment,

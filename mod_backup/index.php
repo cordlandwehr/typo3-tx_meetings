@@ -180,7 +180,7 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		$content .= '<tr><th>Meeting</th><th>Last Backup</th><th></th></tr>';
 		$committees = $this->getAllCommittees();
 		foreach ($committees as $committee) {
-			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $committee);
+			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $committee);
 			$content .= '<tr><td>'.$committeeDATA['committee_name'].'</td>';
 			$content .= '<td>'.$this->linkToMostRecentTar($committee).'</td>';
 			$content .= '<td><input type="checkbox" name="backup_this_committee['.$committeeDATA['uid'].']" checked="checked" /></td>';
@@ -208,7 +208,7 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 												 ORDER BY meeting_date DESC'
 											);
 
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $committee);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $committee);
 
 		$files = array();
 		while ($res && $meeting = mysql_fetch_assoc($res)) {
@@ -272,7 +272,7 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 
 	function getAllCommittees() {
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT uid
-												FROM tx_meetings_committee_list
+												FROM tx_meetings_committee
 												WHERE
 													deleted=0 AND hidden=0
 												ORDER BY committee_name'
@@ -310,7 +310,7 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 	}
 
 	function createTarNameForCommittee($committee) {
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', intval($committee));
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', intval($committee));
 		$tarName = $committeeDATA['committee_name'].'_'.
 			$this->stringToFilename($committeeDATA['committee_name']).'.tar.gz';
 

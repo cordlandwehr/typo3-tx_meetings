@@ -62,7 +62,7 @@ class tx_meetings_view_single extends tx_meetings_view_base {
 		$content = '';
 
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $protocolDATA['committee']);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $protocolDATA['committee']);
 
 		if (
 			$protocolDATA['deleted']==1

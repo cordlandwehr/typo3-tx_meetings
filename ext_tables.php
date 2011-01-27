@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE'))     die ('Access denied.');
 require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_div.php');
 
 t3lib_extMgm::addToInsertRecords('tx_meetings_list');
-t3lib_extMgm::addToInsertRecords('tx_meetings_committee_list');
+t3lib_extMgm::addToInsertRecords('tx_meetings_committee');
 
 $TCA["tx_meetings_list"] = array (
     "ctrl" => array (
@@ -42,7 +42,7 @@ $TCA["tx_meetings_committee"] = array (
         'delete' => 'deleted',
         'dividers2tabs'=>TRUE,
         'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee_list.gif',
+        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee.gif',
     ),
     "feInterface" => array (
         "fe_admin_fieldList" => "hidden, committee_name, storage_pid",
@@ -61,7 +61,7 @@ $TCA["tx_meetings_documents"] = array (
         'hideTable' => 1,
         'delete' => 'deleted',
         'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee_list.gif',
+        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee.gif',
     ),
     "feInterface" => array (
         "fe_admin_fieldList" => "hidden, name,description,document_file",
@@ -79,7 +79,7 @@ $TCA["tx_meetings_resolution"] = array (
         'hideTable' => 1,
         'delete' => 'deleted',
         'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee_list.gif',
+        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee.gif',
     ),
     "feInterface" => array (
         "fe_admin_fieldList" => "hidden,name,resolution_id,resolution_text",
@@ -97,7 +97,7 @@ $TCA["tx_meetings_access_admission"] = array (
         'hideTable' => 1,
         'delete' => 'deleted',
         'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee_list.gif',
+        'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_meetings_committee.gif',
     ),
     "feInterface" => array (
         "fe_admin_fieldList" => "hidden,name,ip_range,usergroup",

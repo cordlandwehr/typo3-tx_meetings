@@ -150,7 +150,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 												 ORDER BY meeting_date DESC'
 											);
 
-			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $this->committee);
+			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);
 
 			$protocolUIDs = array ();
 			if ($committeeDATA['term'] == self::kTERM_ACADEMIC_YEAR) {
@@ -220,7 +220,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 												AND tx_meetings_list.pid > -1
 											  ORDER BY meeting_date DESC'
 										);
-		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee_list', $this->committee);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);
 		$menuYears = array();
 		while($res && $row = mysql_fetch_assoc($res)) {
 			// check if disclosed/published to public
