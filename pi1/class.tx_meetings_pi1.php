@@ -71,7 +71,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 		$this->pi_USER_INT_obj = 1;
 		$this->cache = 0;	// TODO
 		$this->pi_checkCHash = TRUE;
-// debug($this);
+
 		$GETcommands = t3lib_div::_GP($this->extKey);	// can be both: POST or GET
 		$protocolUID = intval($GETcommands['showUid']);
 		$resolutionUID = intval($GETcommands['resolutionUid']);

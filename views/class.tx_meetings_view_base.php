@@ -25,6 +25,7 @@
 * This class provides the list view for all protocol displays
 *
 * @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
+* @subpackage 'tx_meetings'
 */
 
 
@@ -66,6 +67,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	var $conf;
 
 	private $disclosure    = tx_meetings_pi1::kDISCLOSURE_STANDARD;
+	private $committee		= 0;
 	protected $year;
 	protected $commission;
 	protected $Display;
@@ -163,45 +165,81 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 		return $content;
 	}
 
+	/**
+	 * Print if available next meeting in future, or otherwise last occured meeting
+	 * as singel view.
+	 * @return	string is HTML formatted meeting information
+	 */
 	function printLatestProtocol() {
-		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
+			// get future meeting
+		$resFuture =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
 											FROM tx_meetings_list
 											WHERE
 												tx_meetings_list.committee = '.$this->committee.'
 												AND tx_meetings_list.deleted=0
 												AND tx_meetings_list.hidden=0
 												AND tx_meetings_list.pid >= 0
-											  ORDER BY meeting_date DESC'
+												AND tx_meetings_list.meeting_date>'.mktime().'
+											  ORDER BY meeting_date ASC'
 										);
 
-		if($res && $protocol = mysql_fetch_assoc($res)) {
+		if($resFuture && $protocol = mysql_fetch_assoc($resFurture)) {
 			$view = t3lib_div::makeInstance(tx_meetings_view_single);
 			$view->setDisplay($this->Display);
 			return $view->printProtocol($protocol['uid'], $this->accessObj);
-		} else
-			return tx_meetings_notifier::printNotification(
+		}
+			// no future meeting available, use previous one
+		else {
+			$resPast =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
+											FROM tx_meetings_list
+											WHERE
+												tx_meetings_list.committee = '.$this->committee.'
+												AND tx_meetings_list.deleted=0
+												AND tx_meetings_list.hidden=0
+												AND tx_meetings_list.pid >= 0
+												AND tx_meetings_list.meeting_date<='.mktime().'
+											  ORDER BY meeting_date DESC'
+										);
+			if($resPast && $protocol = mysql_fetch_assoc($resPast)) {
+				$view = t3lib_div::makeInstance(tx_meetings_view_single);
+				$view->setDisplay($this->Display);
+				return $view->printProtocol($protocol['uid'], $this->accessObj);
+			}
+				// in this case we have no meeting available/database error
+			else
+				return tx_meetings_notifier::printNotification(
 						$this->pi_getLL('no_meeting_available'),
 						$this->pi_getLL('no_meeting_available_long'));
+		}
 	}
 
-	function printMeetingTitle($protocolUID) {
-		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
+	/**
+	 * Function formats given meetingUID to its title of format
+	 * "MEEING-Title DD.MM.YY"
+	 * @param	integer	$meetingUID	the unique meeting id
+	 * @return	string
+	 */
+	function printMeetingTitle($meetingUID) {
+		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meetingUID);
 
-		// configure protocol title
-		// the '0' is needed since there was a bug in the sql table...
-		if ($protocolDATA['protocol_name']!='' && $protocolDATA['protocol_name']!='0' && $this->Display['ShowTitleElement'])
-			$protocolTitle = $protocolDATA['protocol_name'];
+		// configure meeting title
+		// the '0' is needed due to a legacy bug which once introduced "0" as default value
+		if (	$meetingDATA['protocol_name']!='' &&
+				$meetingDATA['protocol_name']!='0' &&
+				$this->Display['ShowTitleElement']
+			)
+			$meetingTitle = $meetingDATA['protocol_name'];
 		else
-			$protocolTitle = $this->pi_getLL('meeting_from').' '.strftime('%d. %m. %Y', $protocolDATA['meeting_date']);
+			$meetingTitle = $this->pi_getLL('meeting_from').' '.strftime('%d. %m. %Y', $meetingDATA['meeting_date']);
 
-		return $protocolTitle;
+		return $meetingTitle;
 	}
 
 	/**
 	 * Prints link to display page of detail information for a specific meeting
-	 * @param $protocolUID is uid of protocol/meeting
-	 * @param $linkname is OPTIONAL argument if the name the link should be set to something specific
-	 * @return HTML formatted link
+	 * @param	integer	$protocolUID	is uid of protocol/meeting
+	 * @param	integer	$linkname	is OPTIONAL argument if the name the link should be set to something specific
+	 * @return	string	HTML formatted link
 	 */
 	function printLinkToSingleMeeting($protocolUID, $linkname='') {
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
@@ -213,8 +251,8 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 								array(
 									$this->extKey.'[showUid]' => $protocolDATA['uid'],
 									$this->extKey.'[year]' => tx_meetings_div::dateToTenureYear(
-																						  $protocolDATA['meeting_date'],
-																						  $protocolDATA['sticky_date']
+																	$protocolDATA['meeting_date'],
+																	$protocolDATA['sticky_date']
 
 															  ),
 								),
@@ -268,8 +306,8 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	 * This function returns an array of associative arrays (each of database structure from documents table)
 	 * that contains data for all documents for one specific protocol.
 	 * Documents ordered by name.
-	 * @param $protocol UID of protocol
-	 * @return array
+	 * @param	integer	$protocol	UID of protocol
+	 * @return	array
 	 **/
 	function getDocumentsForProtocol($protocol) {
 		$documents = array();
@@ -291,8 +329,8 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	/**
 	 * This function prints a link to given resolution
 	 * TODO depending on state: plain/pdf should give result
-	 * @param $resolutionUID
-	 * @return HTML string
+	 * @param	integer	$resolutionUID
+	 * @return	string	HTML
 	 **/
 	function printLinkToDocument($documentUID, $onlySymbol=false) {
 		$documentDATA = t3lib_BEfunc::getRecord('tx_meetings_documents', $documentUID);
@@ -323,8 +361,8 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	/**
 	 * This function prints a link to given PDF protocol
 	 * TODO depending on state: plain/pdf should give result
-	 * @param $meetingUID
-	 * @return HTML string
+	 * @param	integer	$meetingUID
+	 * @return	string	HTML
 	 **/
 	function printLinkToProtocolPDF($meetingUID, $onlySymbol=false) {
 		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meetingUID);
@@ -355,8 +393,8 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	 * This function returns an array of associative arrays (each of database structure from resolution table)
 	 * that contains data for all resolutions for one specific protocol.
 	 * Resolutions ordered by id, name.
-	 * @param $protocol UID of protocol
-	 * @return array
+	 * @param	integer	$protocol	UID of protocol
+	 * @return	array
 	 **/
 	function getResolutionsForProtocol($protocol) {
 		$resolutions = array();
@@ -381,8 +419,8 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 
 	/**
 	 * This function prints the link to a given resolution
-	 * @param $resolutionUID
-	 * @return HTML string
+	 * @param	integer	$resolutionUID
+	 * @return 	string	HTML
 	 **/
 	function printLinkToResolution($resolutionUID) {
 		$resolutionDATA = t3lib_BEfunc::getRecord('tx_meetings_resolution', $resolutionUID);
