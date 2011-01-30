@@ -25,6 +25,8 @@
  * Module 'Backup' for the 'meetings' extension.
  *
  * @author	Andreas Cord-Landwehr <cola@uni-paderborn.de>
+ * @package TYPO3
+ * @subpackage	tx_meetings
  */
 
 

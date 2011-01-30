@@ -22,11 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
-* This class provides the list view for all protocol displays
-*
-* @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
-* @subpackage 'tx_meetings'
-*/
+ * This class provides the list view for all protocol displays
+ *
+ * @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
+ * @package TYPO3
+ * @subpackage	tx_meetings
+ */
 
 
 

@@ -22,10 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
-* This class provides a huge amount on utility functions, e.g. for database access...
-*
-* @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
-*/
+ * This class provides a huge amount on utility functions, e.g. for database access...
+ *
+ * @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
+ * @package TYPO3
+ * @subpackage	tx_meetings
+ */
 
 
 require_once(PATH_t3lib.'class.t3lib_befunc.php');

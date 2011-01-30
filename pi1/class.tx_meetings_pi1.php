@@ -35,13 +35,11 @@ require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_bas
  * @subpackage	tx_meetings
  */
 class tx_meetings_pi1 extends tslib_pibase {
-//TODO deprecated: change to api/div function!
-	const kDISCLOSURE_STANDARD 	= 0;
-	const kDISCLOSURE_REVIEWERS = 1;
-
+		// constants
 	const kTERM_ACADEMIC_YEAR	= 0;
 	const kTERM_COMMON_YEAR 	= 1;
 
+		// object vars
 	var $prefixId          = 'tx_meetings';		// Same as class name
 	var $scriptRelPath     = 'pi1/class.tx_meetings_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey            = 'meetings';	// The extension key.
@@ -50,10 +48,9 @@ class tx_meetings_pi1 extends tslib_pibase {
 
 	private $committee     = 0;
 	private $year          = 0;
-	private $disclosure    = tx_meetings_pi1::kDISCLOSURE_STANDARD;
+	private $disclosure    = tx_meetings_div::kDISCLOSURE_STANDARD;
 	private $userNotInIPrestrictedNetwork	= true;
 	private $Display 	   = array ();
-
 	private $baseView;		// this is the base view class for protocol outputs
 
 	/**

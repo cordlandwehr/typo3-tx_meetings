@@ -22,12 +22,14 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
-* This class povides a central access admission control function set.
-* All views should use this class to determine if the current user
-* is allowed to view specific content elements.
-*
-* @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
-*/
+ * This class povides a central access admission control function set.
+ * All views should use this class to determine if the current user
+ * is allowed to view specific content elements.
+ *
+ * @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
+ * @package TYPO3
+ * @subpackage	tx_meetings
+ */
 
 
 
@@ -192,6 +194,6 @@ class tx_meetings_access {
 
 // Include extension?
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/api/class.tx_meetings_access.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/api/class.tx_meetings_access.php']);
+    require_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/api/class.tx_meetings_access.php']);
 }
 ?>
