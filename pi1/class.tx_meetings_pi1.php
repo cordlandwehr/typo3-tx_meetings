@@ -44,7 +44,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 	var $scriptRelPath     = 'pi1/class.tx_meetings_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey            = 'meetings';	// The extension key.
 	var $pi_checkCHash     = true;
-	var	$pi_USER_INT_obj   = 0;
+	var	$pi_USER_INT_obj   = 0;	// cachable object
 	var $cache			   = 1;	// tell links to use caching!
 
 	private $committee     = 0;
@@ -66,8 +66,6 @@ class tx_meetings_pi1 extends tslib_pibase {
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
 		$this->pi_initPIflexForm(); // Init and get the flexform data of the plugin
-		$this->pi_USER_INT_obj = 1;
-		$this->cache = 0;	// TODO
 		$this->pi_checkCHash = TRUE;
 
 		$GETcommands = t3lib_div::_GP($this->extKey);	// can be both: POST or GET
