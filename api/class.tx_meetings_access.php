@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Andreas Cord-Landwehr (cola@uni-paderborn.de)
+*  (c) 2008 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,16 +31,15 @@
  * @subpackage	tx_meetings
  */
 
-
-
 require_once(PATH_t3lib.'class.t3lib_befunc.php');
 require_once(PATH_t3lib.'class.t3lib_tcemain.php');
 require_once(PATH_t3lib.'class.t3lib_iconworks.php');
 
-
 /**
- * Script Class to download files as defined in reports
- *
+ * Service class for tx_meetings-extension to contribute access-control
+ * To use this class for access control, always run its init() function
+ * first to set rights level according to selected committee
+ * @class	tx_meetings_access
  */
 class tx_meetings_access {
 	const kACCESS_LEVEL_PUBLIC			= 0;
@@ -52,16 +51,27 @@ class tx_meetings_access {
 	private $dataAccessLevels = array();
 	private $usersAccessLevels = array();		// the access level of the current user (on different periodes)
 
-	function init($committeeUID) {
+	/**
+	 * This function must be run first before using any further function of this
+	 * class: all rights access settings are set by configuration present for given committee
+	 * @param	$integer	$committeeUID	UID of committee
+	 * @return	boolean	returns true IFF success
+	 */
+	function init ($committeeUID) {
+			// return false if now $committeeUID is given
+			//TODO also return if no committee with this id is present
 		if ($committeeUID==0)
 			return false;
 		$this->committeeUID=$committeeUID;
 		$this->initAccessLevels();
 		$this->evaluateUsersAccessLevels();
+		return true;
 	}
 
 	/**
-	 * Computes the user's access level based in IP, groups and access admission of current committee
+	 * Computes the user's access level based in IP, groups and access admission of current
+	 * committee. Access rights are stored in class variable $this->userAccessLevels
+	 * @return	boolean	returns true IFF setting was curried up successfully
 	 */
 	private function evaluateUsersAccessLevels() {
 		//setup User's ID and groups
@@ -105,6 +115,12 @@ class tx_meetings_access {
 		return true;
 	}
 
+
+	/**
+	 * Set up data access levels with initial values as given by committee.
+	 * This function should only be called by init method.
+	 * @return	void
+	 */
 	private function initAccessLevels() {
 		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committeeUID);
 		$this->dataAccessLevels['access_level_agendas'] = $committeeDATA['access_level_agendas'];
@@ -115,11 +131,15 @@ class tx_meetings_access {
 		$this->dataAccessLevels['access_level_resolutions'] = $committeeDATA['access_level_resolutions'];
 	}
 
+
 	/**
 	 * General method to check access rights for specific content elements.
-	 * @param $meetingDate the questioned meeting date
-	 * @param $contentElement the content element given by its DB name
-	 * @return boolean value that tells you if access is allowed
+	 * Note that for this it is required to have all access right initalized
+	 * @see init().
+	 *
+	 * @param	integer	$meetingDate	the questioned meeting date
+	 * @param	integer	$contentElement	the content element given by its DB name
+	 * @return	boolean	value that tells if user is allowed to acces given content elmeent or not
 	 */
 	protected function isAccessAllowedGeneral($meetingDate, $contentElement) {
 		// skip on invalid input
@@ -141,26 +161,66 @@ class tx_meetings_access {
 			if ($userAccess['access_level']>=$this->dataAccessLevels[$contentElement])
 				return true;
 		}
-		// if no access is defined: return false
+		// if no access is defined: return false (=no access)
 		return false;
 	}
 
+
+	/**
+	 * Indicates if predefined user is allewed to see agenda from predefined committee
+	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
+	 * intervals each.
+	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
+	 * @return	boolean	returns if preset user is allowed to access
+	 */
 	public function isAccessAllowedAgenda($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_agendas');
 	}
 
+
+	/**
+	 * Indicates if predefined user is allewed to see preliminary agenda from predefined committee
+	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
+	 * intervals each.
+	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
+	 * @return	boolean	returns if preset user is allowed to access
+	 */
 	public function isAccessAllowedAgendaPreliminary($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_agendas_preliminary');
 	}
 
+
+	/**
+	 * Indicates if predefined user is allewed to see protocols from predefined committee
+	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
+	 * intervals each.
+	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
+	 * @return	boolean	returns if preset user is allowed to access
+	 */
 	public function isAccessAllowedProtocols($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_protocols');
 	}
 
+
+	/**
+	 * Indicates if predefined user is allewed to see preliminary protocols from predefined committee
+	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
+	 * intervals each.
+	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
+	 * @return	boolean	returns if preset user is allowed to access
+	 */
 	public function isAccessAllowedProtocolsPreliminary($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_protocols_preliminary');
 	}
 
+
+	/**
+	 * Indicates if predefined user is allewed to see documents from predefined committee
+	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
+	 * intervals each.
+	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
+	 * @return	boolean	returns if preset user is allowed to access
+	 */
 	public function isAccessAllowedDocuments($meetingDate, $documentUID=0) {
 		$documentDATA = t3lib_BEfunc::getRecord('tx_meetings_documents', $documentUID);
 		// if UID missing, or not confidential: standard way
@@ -186,6 +246,14 @@ class tx_meetings_access {
 		}
 	}
 
+
+	/**
+	 * Indicates if predefined user is allewed to see resolutions from predefined committee
+	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
+	 * intervals each.
+	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
+	 * @return	boolean	returns if preset user is allowed to access
+	 */
 	public function isAccessAllowedResolutions($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_resolutions');
 	}
