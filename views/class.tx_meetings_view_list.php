@@ -38,7 +38,7 @@ class tx_meetings_view_list extends tx_meetings_view_base {
 	protected $Display;
 	protected $accessObj;
 	public $year          = 0;
-	private $disclosure    = tx_meetings_pi1::kDISCLOSURE_STANDARD;
+	private $disclosure    = tx_meetings_div::kDISCLOSURE_STANDARD;
 
 	var $LANG;						// language object
 	var $cObj;

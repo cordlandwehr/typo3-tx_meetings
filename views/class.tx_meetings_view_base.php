@@ -67,7 +67,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	var $cObj;
 	var $conf;
 
-	private $disclosure    = tx_meetings_pi1::kDISCLOSURE_STANDARD;
+	private $disclosure    = tx_meetings_div::kDISCLOSURE_STANDARD;
 	private $committee		= 0;
 	protected $year;
 	protected $commission;

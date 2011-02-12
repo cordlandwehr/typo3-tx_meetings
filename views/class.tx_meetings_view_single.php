@@ -37,7 +37,7 @@ require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_bas
 class tx_meetings_view_single extends tx_meetings_view_base {
 	protected $Display;
 	public $year			= 0;
-	private $disclosure		= tx_meetings_pi1::kDISCLOSURE_STANDARD;
+	private $disclosure		= tx_meetings_div::kDISCLOSURE_STANDARD;
 	public $userNotInIPrestrictedNetwork	= true;
 	var $cache				= 1;
 
