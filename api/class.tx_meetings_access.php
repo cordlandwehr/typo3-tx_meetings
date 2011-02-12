@@ -258,6 +258,33 @@ class tx_meetings_access {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_resolutions');
 	}
 
+	/**
+	 * This static function tells for a given $meeting UID if meeting should be visible. This is done
+	 * either by state of hidden or (if requested) by hidden option joint with the
+	 * request that there must be at least two reviewers for the meeting.
+	 * @param	integer	$meeting	UID of a meeting
+	 * @param	integer	$disclosureType	indicates type of disclosure by constants kDISCLOSRUE_*
+	 * @return	boolean	true iff two reviewers exist
+	 */
+	static function isDisclosed ($meeting, $disclosureType) {
+		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meeting);
+
+		switch ($disclosureType) {
+			case tx_meetings_div::kDISCLOSURE_REVIEWERS: {
+				if ($meetingDATA['reviewer_a'] &&  $meetingDATA['reviewer_b'] && $meetingDATA['hidden']==0)
+					return true;
+				break;
+			}
+			case tx_meetings_div::kDISCLOSURE_STANDARD: {
+				if ($meetingDATA['hidden']==0)
+					return true;
+				break;
+			}
+			default:
+				return false;
+		}
+	}
+
 }
 
 // Include extension?

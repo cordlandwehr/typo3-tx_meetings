@@ -150,7 +150,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 
 			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);
 
-			$protocolUIDs = array ();
+			$meetingUIDs = array ();
 			if ($committeeDATA['term'] == self::kTERM_ACADEMIC_YEAR) {
 
 				while($res && $row = mysql_fetch_assoc($res))	{
@@ -158,7 +158,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 					// THIS IS THE GATEKEEPER, IT TAKES CARE THE ONLY THE GOOD PROTOCOLS ARE DISPLAYED
 					if (
 						// continue if not disclosed
-						$this->isDisclosed($row['uid'],$committeeDATA['disclosure'])==false
+						tx_meetings_access::isDisclosed($row['uid'],$committeeDATA['disclosure'])==false
 						||
 						// continue if not ok
 						( $this->year!=$row['sticky_date']
@@ -170,13 +170,13 @@ class tx_meetings_pi1 extends tslib_pibase {
 						)
 						||
 						// if already sticked to other year
-						//TODO needs 1 since default is problematic
+						//FIXME needs 1 due to previous transitions problem: could be dropped at version 1.0
 						( $row['sticky_date']!=0 && $row['sticky_date']!=1 && $this->year!=$row['sticky_date'] )
 					)
 						continue;
 
 					else
-						$protocolUIDs[] = $row['uid'];
+						$meetingUIDs[] = $row['uid'];
 				}
 			}
 			else {// this is the case of a common year
@@ -185,7 +185,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 					// THIS IS THE GATEKEEPER, IT TAKES CARE THE ONLY THE GOOD PROTOCOLS ARE DISPLAYED
 					if (
 						// continue if not disclosed
-						$this->isDisclosed($row['uid'],$committeeDATA['disclosure'])==false
+						tx_meetings_access::isDisclosed($row['uid'],$committeeDATA['disclosure'])==false
 						||
 						// continue if not ok
 						( $this->year!=$row['sticky_date'] && !($this->year == strftime('%Y',$row['meeting_date'])) )
@@ -196,18 +196,21 @@ class tx_meetings_pi1 extends tslib_pibase {
 						continue;
 
 					else
-						$protocolUIDs[] = $row['uid'];
+						$meetingUIDs[] = $row['uid'];
 				}
 			}
 		}
 
-		return $this->baseView->printMeetingList($this->Display['ListViewType'], $protocolUIDs);
+		return $this->baseView->printMeetingList($this->Display['ListViewType'], $meetingUIDs);
 	}
 
 
 
-
-	function printProtocolListNavigationBreadcrumb() {
+	/**
+	 * Function generates breadcrumb for year navigation for meetings overview page.
+	 * @return	string	HTML encoded breadcrum navigation bar
+	 */
+	function printProtocolListNavigationBreadcrumb () {
 		// Make listing query, pass query to SQL database:
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
 											FROM tx_meetings_list
@@ -222,7 +225,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 		$menuYears = array();
 		while($res && $row = mysql_fetch_assoc($res)) {
 			// check if disclosed/published to public
-			if ($this->isDisclosed($row['uid'],$committeeDATA['disclosure'])==false)
+			if (tx_meetings_access::isDisclosed($row['uid'],$committeeDATA['disclosure'])==false)
 				continue;
 
 			// set sticky years
@@ -260,7 +263,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 
 			// highlight in menu
  			if ($this->piVars['year'] == $currentYear) {
-				// present newest protocols if nothing selected
+				// present newest meeting if nothing selected
 
 				$contentTopMenu .= ' <span style="padding: 5px;"><strong>'.
 					$this->pi_linkTP(
@@ -285,25 +288,6 @@ class tx_meetings_pi1 extends tslib_pibase {
 		return $contentTopMenu.'</div>';
 	}
 
-	//TODO does not fit into current architecture
-	function isDisclosed($protocol, $disclosureType) {
-		$protocolDB = t3lib_BEfunc::getRecord('tx_meetings_list', $protocol);
-
-		switch ($disclosureType) {
-			case tx_meetings_div::kDISCLOSURE_REVIEWERS: {
-				if ($protocolDB['reviewer_a'] &&  $protocolDB['reviewer_b'] && $protocolDB['hidden']==0)
-					return true;
-				break;
-			}
-			case tx_meetings_div::kDISCLOSURE_STANDARD: {
-				if ($protocolDB['hidden']==0)
-					return true;
-				break;
-			}
-			default:
-				return false;
-		}
-	}
 }
 
 
