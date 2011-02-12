@@ -6,8 +6,15 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="title">Protocols Backup</label>
+			<label index="title">Meetings Full Backup</label>
+			<label index="title_archived-files">Archived Files</label>
+			<label index="backup_title_long">Create Backups of the following selected Committees</label>
+			<label index="last_backup">Last Backup</label>
+			<label index="backup">Backup</label>
+			<label index="meeting">Meeting</label>
 			<label index="function_create">create backup</label>
+			<label index="label_submit_backup-committees">Create Backups for selected Committees</label>
+			<label index="error_could-not-copy-file">Error: could not copy file!</label>
 			<label index="function2">Function #2</label>
 			<label index="function3">Function #3</label>
 		</languageKey>

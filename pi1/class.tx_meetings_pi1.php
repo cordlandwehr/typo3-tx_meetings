@@ -33,7 +33,7 @@ require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_bas
  * @author	Andreas Cord-Landwehr <phoenixx@upb.de>
  * @package	TYPO3
  * @subpackage	tx_meetings
- * @class tx_meetings_pi1
+ * @class	tx_meetings_pi1
  */
 class tx_meetings_pi1 extends tslib_pibase {
 		// constants
@@ -56,7 +56,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 	private $baseView;		// this is the base view class for protocol outputs
 
 	/**
-	 * Main method of your PlugIn
+	 * Main method of plugin meetings_pi1: Frontend listing and single view for meetings
 	 *
 	 * @param	string		$content: The content of the PlugIn
 	 * @param	array		$conf: The PlugIn Configuration
@@ -119,6 +119,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 		}
 	}
 
+
 	/**
 	 * Shows a list of database entries
 	 *
@@ -126,7 +127,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 	 * @param	array		$conf: PlugIn Configuration
 	 * @return	HTML list of table entries
 	 */
-	function printOverview($content)	{
+	function printOverview ($content)	{
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();		// Loading the LOCAL_LANG values
 
@@ -293,7 +294,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/pi1/class.tx_meetings_pi1.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/pi1/class.tx_meetings_pi1.php']);
+	require_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/pi1/class.tx_meetings_pi1.php']);
 }
 
 ?>

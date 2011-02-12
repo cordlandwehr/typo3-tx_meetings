@@ -25,7 +25,7 @@
  * Module 'Backup' for the 'meetings' extension.
  *
  * @author	Andreas Cord-Landwehr <cola@uni-paderborn.de>
- * @package TYPO3
+ * @package	TYPO3
  * @subpackage	tx_meetings
  */
 
@@ -48,11 +48,14 @@ $BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users
 class tx_meetings_module_backup extends t3lib_SCbase {
 	var $TEMP_PATH = '/tmp';
 
+		// path constants
 	const kRELATIVE_TAR_PATH = 'typo3temp/meetings_tar/';
 	const kRELATIVE_TMP_PATH = 'typo3temp/meetings_tmp/';
 
+		// views
 	const kVIEW_CREATE_BACKUPS = 1;
 
+		// actions
 	const kACTION_CREATE_BACKUPS = 1;
 
 	/**
@@ -63,12 +66,6 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
 
 		parent::init();
-
-		/*
-		if (t3lib_div::_GP("clear_all_cache"))	{
-			$this->include_once[]=PATH_t3lib."class.t3lib_tcemain.php";
-		}
-		*/
 	}
 
 	/**
@@ -81,8 +78,6 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		$this->MOD_MENU = Array (
 			"function" => Array (
 				self::kVIEW_CREATE_BACKUPS => $LANG->getLL("function_create"),
-// 				"2" => $LANG->getLL("function2"),
-//TODO				"3" => $LANG->getLL("function3"),
 			)
 		);
 		parent::menuConfig();
@@ -156,13 +151,6 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 
 			$this->content .= $this->printCreateBackupMenu();
 
-
-// 			// ShortCut
-// 			if ($BE_USER->mayMakeShortcut())	{
-// 				$this->content.=$this->doc->spacer(20).$this->doc->section("",$this->doc->makeShortcutIcon("id",implode(",",array_keys($this->MOD_MENU)),$this->MCONF["name"]));
-// 			}
-//
-// 			$this->content.=$this->doc->spacer(10);
 		} else {
 				// If no access or if ID == zero
 
@@ -176,10 +164,15 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		}
 	}
 
+	/**
+	 * Print menu to start backup generation
+	 *
+	 * @return	string	HTML form
+	 */
 	function printCreateBackupMenu () {
-		$content = '<h2>Create Backups of the following selected Committees</h2>';
+		$content = '<h2>'.$LANG->getLL('backup_title_long').'</h2>';
 		$content .= '<table>';
-		$content .= '<tr><th>Meeting</th><th>Last Backup</th><th></th></tr>';
+		$content .= '<tr><th>'.$LANG->getLL('meeting').'</th><th>'.$LANG->getLL('last_backup').'</th><th></th></tr>';
 		$committees = $this->getAllCommittees();
 		foreach ($committees as $committee) {
 			$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $committee);
@@ -189,7 +182,9 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		}
 		$content .= '</table>';
 
-		$content .= '<div><button type="submit" name="backup_task" value="'.self::kACTION_CREATE_BACKUPS.'">Create Backups for selected Committees</button></div>';
+		$content .= '<div><button type="submit" name="backup_task" value="'.self::kACTION_CREATE_BACKUPS.'">'.
+			$LANG->getLL('label_submit_backup-committees').
+			'</button></div>';
 
 		return $content;
 	}
@@ -199,7 +194,7 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 	 * @return array
 	 */
 	function createFilelist ($committee) {
-		// Make listing query, pass query to SQL database:
+			// Make listing query, pass query to SQL database:
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
 												FROM tx_meetings_list
 												WHERE
@@ -220,9 +215,9 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 						'old' => tx_meetings_div::uploadFolder.$meeting['protocol_pdf'],
 						'new' => tx_meetings_div::dateToTenureYear($meeting['meeting_date'], $meeting['sticky_date']).
 										'/'.
-										$this->createMeetingFileTitleProtocol($meeting['uid'])
+										$this->createMeetingFileTitle ($meeting['uid'])
 					);
-			$documents = tx_meetings_div::getDocumentsForMeeting($meeting['uid']);
+			$documents = tx_meetings_div::getDocumentsForMeeting ($meeting['uid']);
 			$counter = 1;
 			foreach($documents as $document) {
 				// TODO check for non-pdfs!
@@ -256,11 +251,20 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		return $files;
 	}
 
-	function createMeetingFileTitleProtocol($meetingUID) {
+
+	/**
+	 * For a meeting's protocol compute filename. This function also prefix name with path
+	 * hirarchy according to meeting-date/year.
+	 *
+	 * @param	integer	$meetingUID	the UID of a meeting
+	 * @return	string	filename for the meeting
+	 */
+	function createMeetingFileTitle ($meetingUID) {
 		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meetingUID);
 
-		// configure protocol title
-		// the '0' is needed since there was a bug in the sql table...
+			// configure protocol title
+			// FIXME the '0' is needed from transition problem (previously set to 1 by default)
+			// delete at version 1.0
 		if ($meetingDATA['protocol_name']!='' && $meetingDATA['protocol_name']!='0') {
 			$filename = $meetingDATA['protocol_name'];
 			$filename = $this->stringToFilename($filename);
@@ -272,6 +276,12 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 				strftime('%Y-%m-%d', $meetingDATA['meeting_date']).'.pdf';
 	}
 
+
+	/**
+	 * This function collects all committes available in database
+	 *
+	 * @return	array	consists of UIDs of committees
+	 */
 	function getAllCommittees() {
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT uid
 												FROM tx_meetings_committee
@@ -286,6 +296,7 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		return $committees;
 	}
 
+
 	/**
 	 * Prints out the module HTML
 	 *
@@ -296,7 +307,14 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		echo $this->content;
 	}
 
-	function stringToFilename($filename) {
+
+	/**
+	 * Converts given string to a suable frilename.
+	 *
+	 * @param	string	$filename	designated name for file
+	 * @return	string	usable name of file
+	 */
+	static function stringToFilename ($filename) {
 		$filename = strtolower($filename);
 		$filename = str_replace("#","_",$filename);
 		$filename = str_replace(" ","_",$filename);
@@ -308,9 +326,18 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		$filename = str_replace("\"","_",$filename);
 		$filename = str_replace("?","",$filename);
 		$filename = str_replace(".","",$filename);
+
 		return $filename;
 	}
 
+
+	/**
+	 * This function assigns a unique tar.gz filename to a specific meeting.
+	 * Filename contains as preefix the predefined value $stringtoFilename[<this committee>]
+	 *
+	 * @param	integer	$committee	UID of committee
+	 * @return	string	filename as a plain string
+	 */
 	function createTarNameForCommittee($committee) {
 		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', intval($committee));
 		$tarName = $committeeDATA['committee_name'].'_'.
@@ -319,33 +346,60 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 		return $tarName;
 	}
 
-	function linkToMostRecentTar($committee) {
-		$tarName = $this->createTarNameForCommittee($committee);
-		return '<a href="../../../../'.self::kRELATIVE_TAR_PATH.$tarName.
-			'" >Backup '.date('Y-m-d H:i',filemtime(PATH_site.self::kRELATIVE_TAR_PATH.$tarName)).'</a>';
 
+	/**
+	 * For a given committee creates link to its tar file (if existing). If not existing function
+	 * returns a broken link.
+	 *
+	 * @param	integer	$committee	UID of committee
+	 * @return	string	HTML wrapped link
+	 */
+	function linkToMostRecentTar ($committee) {
+		$tarName = $this->createTarNameForCommittee ($committee);
+		return '<a href="../../../../'.self::kRELATIVE_TAR_PATH.$tarName.'" >'.
+			$LANG->getLL('backup').' '.
+			date('Y-m-d H:i',filemtime(PATH_site.self::kRELATIVE_TAR_PATH.$tarName)).
+			'</a>';
 	}
 
-	function copyFilesToTemp($files) {
-		// delete and create base temp dir
-		t3lib_div::rmdir($this->TEMP_PATH,true);
-		t3lib_div::mkdir($this->TEMP_PATH);
+
+	/**
+	 * This function copies all designated files to temp directory
+	 * @param	array	$files	array of strings of file name including their relative pathes
+	 * @return	void
+	 */
+	function copyFilesToTemp ($files) {
+			// deletes and then creates base temp dir
+		t3lib_div::rmdir ($this->TEMP_PATH, true);
+		t3lib_div::mkdir ($this->TEMP_PATH);
 
 		foreach ($files as $file) {
  			t3lib_div::mkdir_deep($this->TEMP_PATH,t3lib_div::dirname($file['new']));
 
 			if (!copy (PATH_site.$file['old'],$this->TEMP_PATH.$file['new']))
-				echo '<p>Problem! File not copied!<br />'.$file['old'].'</p>'
+				echo '<p>'.$LANG->getLL('error_could-not-copy-file').'<br />'.$file['old'].'</p>'
 				;
 		}
 	}
 
+
+	/**
+	 * Creates TAR-balls and returns links to them. For this the tarable files must have been copied to
+	 * temporary location before. All information and links are returned by echo/print.
+	 *
+	 * @param	string	$tarName	of the to be generated tar
+	 * @return	void
+	 */
 	function createDirTarball ($tarName) {
-		// uploads
-		echo '<h2>Archivierte Dateien</h2>';
+			// uploads
+		echo '<h2>'.$LANG->getLL('title_archived-files"').'</h2>';
 		t3lib_div::mkdir(PATH_site.self::kRELATIVE_TAR_PATH);
-		$createCommand = 'cd '.PATH_site.' && tar cvzf '.PATH_site.self::kRELATIVE_TAR_PATH.$tarName.' '.self::kRELATIVE_TMP_PATH;
-		exec($createCommand, $output);
+		$createCommand = 'cd '.PATH_site.' && tar cvzf '.
+			PATH_site.self::kRELATIVE_TAR_PATH.$tarName.' '.self::kRELATIVE_TMP_PATH;
+
+			// run at command line
+		exec ($createCommand, $output);
+			// put out links
 		foreach ($output as $line)
 			echo $line.'<br />';
 	}
@@ -353,9 +407,8 @@ class tx_meetings_module_backup extends t3lib_SCbase {
 }
 
 
-
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/mod_backup/index.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/mod_backup/index.php']);
+	require_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/mod_backup/index.php']);
 }
 
 
