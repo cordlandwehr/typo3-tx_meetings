@@ -53,7 +53,7 @@ class tx_meetings_view_list extends tx_meetings_view_base {
 	}
 
 
-	function printProtocols ($protocolUIDs, $accessObj) {
+	function printMeetings ($protocolUIDs, $accessObj) {
 		$this->accessObj = $accessObj;
 		$contentProtocolList = '';
 		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);

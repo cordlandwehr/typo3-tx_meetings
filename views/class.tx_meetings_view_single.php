@@ -55,9 +55,9 @@ class tx_meetings_view_single extends tx_meetings_view_base {
 	/**
 	 * Display a single item from the database
 	 *
-	 * @param	$protocolUID UID of protocol
-	 * @param	$accessObj object of type tx_meetings_access that is preconfigured with access information
-	 * @return	HTML of a single database entry
+	 * @param	integer	$protocolUID	UID of protocol
+	 * @param	object	$accessObj	object of type tx_meetings_access that is preconfigured with access information
+	 * @return	string	HTML of a single database entry
 	 */
 	function printProtocol($protocolUID, $accessObj)	{
 		$content = '';
@@ -198,7 +198,6 @@ class tx_meetings_view_single extends tx_meetings_view_base {
 				}
 			} else
 				$content .= '<p>'.$this->pi_getLL('no_documents_long').'</p>';
-
 		}
 
 		// print resolutions
@@ -231,7 +230,7 @@ class tx_meetings_view_single extends tx_meetings_view_base {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/views/class.tx_meetings_view_single.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/views/class.tx_meetings_view_single.php']);
+	require_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/views/class.tx_meetings_view_single.php']);
 }
 
 ?>

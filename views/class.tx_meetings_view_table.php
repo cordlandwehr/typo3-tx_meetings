@@ -53,102 +53,110 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 	function setDisplay($Display) { $this->Display = $Display;}
 
 	/**
-	 * This Function prints one line of result table
-	 * @param $protocolUID
-	 * @return string
+	 * This Function creates one line of the result table.
+	 *
+	 * @param	integer	$meetingUID	UID of meeting
+	 * @return 	string	the HTML-<TR> wrapped line of the table
 	 **/
-	function printProtocolTableLine ($protocolUID, $oddLine=true) {
-		$contentProtocol = '';
-		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
-		$this->year = tx_meetings_div::dateToTenureYear($protocolDATA['meeting_date'],$protocolDATA['sticky_date']);
+	function printMeetingTableLine ($meetingUID, $oddLine=true) {
+		$contentMeeting = '';
+		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meetingUID);
+		$this->year = tx_meetings_div::dateToTenureYear($meetingDATA['meeting_date'],$meetingDATA['sticky_date']);
 
-		// here the real code starts
-		$contentProtocolTable = '<tr '.($oddLine? 'class="meetings_row_odd"':'class="fsimprotocols_row_even"').'>';
-		// date, room, time
-		$contentProtocolTable .= '<td>'.
+			// here the real code starts
+		$contentMeetingTable = '<tr '.($oddLine? 'class="meetings_row_odd"':'class="fsimprotocols_row_even"').'>';
+			// date, room, time
+		$contentMeetingTable .= '<td>'.
 					  $this->pi_linkTP(
-								date('d.m.Y',$protocolDATA['meeting_date']),
+								date('d.m.Y',$meetingDATA['meeting_date']),
 								array(
-									$this->extKey.'[showUid]' => $protocolDATA['uid'],
+									$this->extKey.'[showUid]' => $meetingDATA['uid'],
 									$this->extKey.'[year]' => $this->year,
 								),
 								$this->cache
 						).'</td>';
 
-		// switch for Title element at overview page
+			// switch for Title element at overview page
 		if ($this->Display['ShowTitleElement'])
-			$contentProtocolTable .= '<td>'.$this->pi_linkTP(
-								$protocolDATA['protocol_name'],
+			$contentMeetingTable .= '<td>'.$this->pi_linkTP(
+								$meetingDATA['protocol_name'],
 								array(
-									$this->extKey.'[showUid]' => $protocolDATA['uid'],
+									$this->extKey.'[showUid]' => $meetingDATA['uid'],
 									$this->extKey.'[year]' => $this->year,
 								),
 								$this->cache
 						).'</td>';
 
-		// switch for agenda and documents at list view
-		$contentProtocolTable .= '<td>';
+			// switch for agenda and documents at list view
+		$contentMeetingTable .= '<td>';
 		if ($this->Display['ShowAgendaElement']) {
 
-			if ($protocolDATA['agenda']!='') // TODO does this work with caching?
-				$contentProtocolTable .= $this->pi_linkToPage(
-															($protocolDATA['agenda_preliminary']==0? $this->pi_getLL('agenda') : $this->pi_getLL('preliminary_agenda')),
+			if ($meetingDATA['agenda']!='') // TODO does this work with caching?
+				$contentMeetingTable .= $this->pi_linkToPage(
+															($meetingDATA['agenda_preliminary']==0? $this->pi_getLL('agenda') : $this->pi_getLL('preliminary_agenda')),
 															$GLOBALS['TSFE']->id.'#meetings_agenda',
 															'',
 															array(
-																$this->extKey.'[showUid]' => $protocolDATA['uid'],
+																$this->extKey.'[showUid]' => $meetingDATA['uid'],
 																$this->extKey.'[year]' => $this->year,
 															)).
 								  '<br />';
 
 			$admitted = '';
 			// TODO dirty hack
-			if ($protocolDATA['not_admitted']==1)
+			if ($meetingDATA['not_admitted']==1)
 				$admitted = '<strong>('.$this->pi_getLL('not_admitted').')</strong> ';
-			if ($protocolDATA['protocol']!='' || $protocolDATA['protocol_pdf'])  // TODO does this work with caching?
-				$contentProtocolTable .= $this->pi_linkToPage($this->pi_getLL('meeting-protocol'), $GLOBALS['TSFE']->id.'#meetings_protocol','',
+			if ($meetingDATA['protocol']!='' || $meetingDATA['protocol_pdf'])
+				$contentMeetingTable .= $this->pi_linkToPage($this->pi_getLL('meeting-protocol'), $GLOBALS['TSFE']->id.'#meetings_protocol','',
 															array(
-																$this->extKey.'[showUid]' => $protocolDATA['uid'],
+																$this->extKey.'[showUid]' => $meetingDATA['uid'],
 																$this->extKey.'[year]' => $this->year,
 															)).
 								  ' '.$admitted.'<br />';
 		}
 		if ($this->Display['ShowDocumentsElement']) {
-			$documents = $this->getDocumentsForProtocol($protocolDATA['uid']);
-			if ($this->accessObj->isAccessAllowedDocuments($protocolDATA['meeting_date']))
+			$documents = $this->getDocumentsForProtocol($meetingDATA['uid']);
+			if ($this->accessObj->isAccessAllowedDocuments($meetingDATA['meeting_date']))
 				foreach($documents as $documentDATA) {
-					if ($this->accessObj->isAccessAllowedDocuments($protocolDATA['meeting_date'],$documentDATA['uid']))
-						$contentProtocolTable .= $this->printLinkToDocument($documentDATA['uid'], true).' ';
+					if ($this->accessObj->isAccessAllowedDocuments($meetingDATA['meeting_date'],$documentDATA['uid']))
+						$contentMeetingTable .= $this->printLinkToDocument($documentDATA['uid'], true).' ';
 					else
-						$contentProtocolTable .= '<img title="'.$documentDATA['name'].'" src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.
+						$contentMeetingTable .= '<img title="'.$documentDATA['name'].'" src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.
 						$this->pi_getLL('documents').'" /> ';
 				}
 			else
 				foreach($documents as $documentDATA)
-					$contentProtocolTable .= '<img title="'.$documentDATA['name'].'" src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.
+					$contentMeetingTable .= '<img title="'.$documentDATA['name'].'" src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.
 						$this->pi_getLL('documents').'" /> ';
 		}
-		$contentProtocolTable .= '</td>';
+		$contentMeetingTable .= '</td>';
 		// switch for resolutions display at list view
 		if ($this->Display['ShowResolutionsElement']) {
-			$resolutions = $this->getResolutionsForProtocol($protocolDATA['uid']);
-			$contentProtocolTable .= '<td>';
-			if ($this->accessObj->isAccessAllowedResolutions($protocolDATA['meeting_date']))
+			$resolutions = $this->getResolutionsForProtocol($meetingDATA['uid']);
+			$contentMeetingTable .= '<td>';
+			if ($this->accessObj->isAccessAllowedResolutions($meetingDATA['meeting_date']))
 				foreach ($resolutions as $resolutionDATA)
-					$contentProtocolTable .= $this->printLinkToResolution($resolutionDATA['uid']).'<br /> ';
+					$contentMeetingTable .= $this->printLinkToResolution($resolutionDATA['uid']).'<br /> ';
 			else
 				foreach ($resolutions as $resolutionDATA)
-					$contentProtocolTable .= '<i title="'.
+					$contentMeetingTable .= '<i title="'.
 						$this->pi_getLL('access_denied').'">'.$this->printResolutionTitle($resolutionDATA['uid']).'</i><br /> ';
-			$contentProtocolTable .= '</td>';
+			$contentMeetingTable .= '</td>';
 		}
 
-		$contentProtocolTable .= '</tr>';
+		$contentMeetingTable .= '</tr>';
 
-		return $contentProtocolTable;
+		return $contentMeetingTable;
 	}
 
-	function printProtocols ($protocolUIDs, $accessObj) {
+
+	/**
+	 * Generates table of meetings as given by selected $meeingUIDs and preset $accessObj
+	 * For each line this function use @see printMeetingTableLine
+	 *
+	 * @param	array	$meetingsUIDs	UIDs that shal be presented
+	 */
+	function printMeetings ($meetingUIDs, $accessObj) {
 		$this->accessObj = $accessObj;
 
 		$content = '';
@@ -164,8 +172,8 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 		$content .= '</tr>';
 		// TODO add name
 		$counter=1;
-		foreach ($protocolUIDs as $meeting)
-			$content .= $this->printProtocolTableLine($meeting,$counter++%2); //TODO fix committee!
+		foreach ($meetingUIDs as $meeting)
+			$content .= $this->printMeetingTableLine($meeting,$counter++%2); //TODO fix committee!
 		$content .= '</table>';
 
 		return $content;

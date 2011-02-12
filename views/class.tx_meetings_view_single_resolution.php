@@ -36,7 +36,7 @@ require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_bas
  */
 class tx_meetings_view_single_resolution extends tx_meetings_view_base {
 
-	public $year          = 0;
+	public $year = 0;
 	private $disclosure    = tx_meetings_div::kDISCLOSURE_STANDARD;
 	public $userNotInIPrestrictedNetwork	= true;
 
@@ -54,9 +54,11 @@ class tx_meetings_view_single_resolution extends tx_meetings_view_base {
 
 
 	/**
-	 * This function prints a <UL> list of all resolutions
-	 * @param uid of committee
-	 * @return string
+	 * This function prints a <UL> list of all resolutions the user has access to.
+	 *
+	 * @param 	integer	$resolutionUID	UID of resolution
+	 * @param	object	$accessObj	object of type meetings_access that is predefined for current user's rights
+	 * @return	string
 	 */
 	function printSingleResolution ($resolutionUID, $accessObj) {
 		$content = '';

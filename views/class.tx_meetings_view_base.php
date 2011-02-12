@@ -107,13 +107,13 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 			case self::kVIEW_LIST: {
 				$view = t3lib_div::makeInstance(tx_meetings_view_list);
 				$view->setDisplay($this->Display);
-				return $view->printProtocols($protocolUIDs, $this->accessObj);
+				return $view->printMeetings($protocolUIDs, $this->accessObj);
 				break;
 			}
 			case self::kVIEW_TABLE: {
 				$view = t3lib_div::makeInstance(tx_meetings_view_table);
 				$view->setDisplay($this->Display);
-				return $view->printProtocols($protocolUIDs, $this->accessObj);
+				return $view->printMeetings($protocolUIDs, $this->accessObj);
 				break;
 			}
 			case self::kVIEW_RESOLUTIONS: {
