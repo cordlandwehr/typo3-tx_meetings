@@ -60,7 +60,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	public $extKey           	= 'meetings';	// The extension key.
 	public $pi_checkCHash     	= true;
 	public $pi_USER_INT_obj  	= 1;
-	public $cache 				= 0;				//TODO repair
+	public $cache 				= 1;
 	var $scriptRelPath    		= 'pi1/class.tx_meetings_pi1.php';	// Path to this script relative to the extension dir.
 
  	var $LANG;						// language object

@@ -39,6 +39,7 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 	protected $Display = array ();
 	var $year;
 	protected $accessObj;
+	var $cache = 1;
 
 	function __construct () {
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
@@ -89,7 +90,7 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 		$contentProtocolTable .= '<td>';
 		if ($this->Display['ShowAgendaElement']) {
 
-			if ($protocolDATA['agenda']!='')
+			if ($protocolDATA['agenda']!='') // TODO does this work with caching?
 				$contentProtocolTable .= $this->pi_linkToPage(
 															($protocolDATA['agenda_preliminary']==0? $this->pi_getLL('agenda') : $this->pi_getLL('preliminary_agenda')),
 															$GLOBALS['TSFE']->id.'#meetings_agenda',
@@ -104,7 +105,7 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 			// TODO dirty hack
 			if ($protocolDATA['not_admitted']==1)
 				$admitted = '<strong>('.$this->pi_getLL('not_admitted').')</strong> ';
-			if ($protocolDATA['protocol']!='' || $protocolDATA['protocol_pdf'])
+			if ($protocolDATA['protocol']!='' || $protocolDATA['protocol_pdf'])  // TODO does this work with caching?
 				$contentProtocolTable .= $this->pi_linkToPage($this->pi_getLL('meeting-protocol'), $GLOBALS['TSFE']->id.'#meetings_protocol','',
 															array(
 																$this->extKey.'[showUid]' => $protocolDATA['uid'],

@@ -44,7 +44,8 @@ class tx_meetings_pi1 extends tslib_pibase {
 	var $scriptRelPath     = 'pi1/class.tx_meetings_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey            = 'meetings';	// The extension key.
 	var $pi_checkCHash     = true;
-	var	$pi_USER_INT_obj   = 1;
+	var	$pi_USER_INT_obj   = 0;
+	var $cache			   = 1;	// tell links to use caching!
 
 	private $committee     = 0;
 	private $year          = 0;
