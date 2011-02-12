@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Andreas Cord-Landwehr <phoenixx@upb.de>
+*  (c) 2008 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,9 +28,10 @@ require_once(PATH_t3lib.'class.t3lib_htmlmail.php');
 require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_div.php');
 
 /**
- * Plugin 'Show protocols' for the 'meetings' extension.
+ * Plugin "Edit Protocols" for the 'meetings' extension.
+ * This plugin allows editing of plaintext protocols and is very restricted in use.
  *
- * @author	Andreas Cord-Landwehr <phoenixx@upb.de>
+ * @author	Andreas Cord-Landwehr <cola@uni-paderborn.de>
  * @package	TYPO3
  * @subpackage	tx_meetings
  */
