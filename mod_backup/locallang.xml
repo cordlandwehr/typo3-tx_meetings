@@ -15,11 +15,17 @@
 			<label index="function_create">create backup</label>
 			<label index="label_submit_backup-committees">Create Backups for selected Committees</label>
 			<label index="error_could-not-copy-file">Error: could not copy file!</label>
-			<label index="function2">Function #2</label>
-			<label index="function3">Function #3</label>
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="title">Landkarten</label>
+			<label index="title">Vollständige Sitzungssicherung</label>
+			<label index="title_archived-files">Archivierte Dateien</label>
+			<label index="backup_title_long">Erstelle Sicherung für folgende Gremien</label>
+			<label index="last_backup">Letzte Sicherung</label>
+			<label index="backup">Sicherung</label>
+			<label index="meeting">Gremium</label>
+			<label index="function_create">erstelle Sicherung</label>
+			<label index="label_submit_backup-committees">Erstelle Sicherung für ausgewählte Gremien</label>
+			<label index="error_could-not-copy-file">Fehler: Datei konnte nicht kopiert werden!</label>
 		</languageKey>
 	</data>
 </T3locallang>
