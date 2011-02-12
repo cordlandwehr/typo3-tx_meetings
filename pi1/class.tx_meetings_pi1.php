@@ -28,11 +28,12 @@ require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_notifier.p
 require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_base.php');
 
 /**
- * Plugin 'Show protocols' for the 'meetings' extension.
+ * Plugin 'Show Meetings' for the 'meetings' extension.
  *
  * @author	Andreas Cord-Landwehr <phoenixx@upb.de>
  * @package	TYPO3
  * @subpackage	tx_meetings
+ * @class tx_meetings_pi1
  */
 class tx_meetings_pi1 extends tslib_pibase {
 		// constants
@@ -83,6 +84,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 		$this->Display['ShowDocumentsElement'] = ($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'ShowDocumentsElement', 'Display')==1);
 		$this->Display['ShowResolutionsElement'] = ($this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'ShowResolutionsElement', 'Display')==1);
 
+			// get instance of base view class and tell it what to display
 		$this->baseView = t3lib_div::makeInstance(tx_meetings_view_base);
 		$this->baseView->init($this->committee , $this->year, $this->conf);
 		$this->baseView->setDisplay($this->Display);

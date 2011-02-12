@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Andreas Cord-Landwehr (cola@uni-paderborn.de)
+*  (c) 2010 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,10 +22,11 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * This class provides the list view for all protocol displays
+ * This is the base class for all views. Each specific view must
+ * extend this class.
  *
- * @author Andreas Cord-Landwehr <cola@uni-paderborn.de>
- * @package TYPO3
+ * @author	Andreas Cord-Landwehr <cola@uni-paderborn.de>
+ * @package	TYPO3
  * @subpackage	tx_meetings
  */
 
@@ -127,7 +128,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 		$view = t3lib_div::makeInstance(tx_meetings_view_single);
 		$view->setDisplay($this->Display);
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
-		$content = '<p>';
+		$content = '<p style="border-top:1px solid; border-bottom:1px solid; padding: 3px;">';
 		$content .= $this->printLinkToPreviousMeeting($protocolUID);
 		$content .= ' &lt; ';
 		$content .= $this->pi_linkTP(
