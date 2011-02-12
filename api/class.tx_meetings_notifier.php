@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Andreas Cord-Landwehr (cola@uni-paderborn.de)
+*  (c) 2010 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -33,8 +33,10 @@ require_once(PATH_t3lib.'class.t3lib_tcemain.php');
 require_once(PATH_t3lib.'class.t3lib_iconworks.php');
 
 
-/**
- * Script Class to download files as defined in reports
+/** @class tx_meetings_notifier
+ *
+ * This class is meant to allow a unified and nice output of infos,
+ * warnings, and errors
  *
  */
 class tx_meetings_notifier {
@@ -47,9 +49,9 @@ class tx_meetings_notifier {
 
 	/**
 	 * Returns HTML string in type of a <div> area that represents notification
-	 * @param $title of notification
-	 * @param $notification text
-	 * @param $urgency is optional parameter in type of of self::kNOTIFICATION_*
+	 * @param	string	$title	of notification
+	 * @param	string	$notification	text
+	 * @param	integer $urgency	is optional parameter in type of of self::kNOTIFICATION_*
 	 */
 	static function printNotification($title, $notification, $urgency=self::kNOTIFICATION_INFO) {
 		$notificationDiv = '<div>';
@@ -68,6 +70,6 @@ class tx_meetings_notifier {
 
 // Include extension?
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/api/class.tx_meetings_notifier.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/api/class.tx_meetings_notifier.php']);
+    require_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/meetings/api/class.tx_meetings_notifier.php']);
 }
 ?>
