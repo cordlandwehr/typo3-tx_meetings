@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Andreas Cord-Landwehr <phoenixx@upb.de>
+*  (c) 2008 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_bas
 /**
  * Plugin 'Show Meetings' for the 'meetings' extension.
  *
- * @author	Andreas Cord-Landwehr <phoenixx@upb.de>
+ * @author	Andreas Cord-Landwehr <cola@uni-paderborn.de>
  * @package	TYPO3
  * @subpackage	tx_meetings
  * @class	tx_meetings_pi1
@@ -96,7 +96,7 @@ class tx_meetings_pi1 extends tslib_pibase {
 			return $this->pi_wrapInBaseClass($content);
 		}
 		if ($this->Display['ListViewType']==tx_meetings_view_base::kVIEW_LATEST) {
-			$content = $this->baseView->printLatestProtocol($protocolUID);
+			$content = $this->baseView->printLatestProtocol();
 			return $this->pi_wrapInBaseClass($content);
 		}
 		if ($resolutionUID) {

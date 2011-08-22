@@ -185,7 +185,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 											  ORDER BY meeting_date ASC'
 										);
 
-		if($resFuture && $protocol = mysql_fetch_assoc($resFurture)) {
+		if($resFuture && $protocol = mysql_fetch_assoc($resFuture)) {
 			$view = t3lib_div::makeInstance(tx_meetings_view_single);
 			$view->setDisplay($this->Display);
 			return $view->printProtocol($protocol['uid'], $this->accessObj);
