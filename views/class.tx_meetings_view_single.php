@@ -65,12 +65,8 @@ class tx_meetings_view_single extends tx_meetings_view_base {
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
 		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $protocolDATA['committee']);
 
-		if (
-			$protocolDATA['deleted']==1
-			|| $protocolDATA['hidden']==1
-			|| $protocolDATA['pid']<0
-		) {
-			return $this->getLL('meeting_id_invalid');
+		if ( !$accessObj->isDisclosed($protocolUID, $committeeDATA['disclosure'])) {
+			return $this->pi_getLL('meeting_id_invalid');
 		}
 
 		/*

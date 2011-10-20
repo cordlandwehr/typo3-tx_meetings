@@ -264,19 +264,22 @@ class tx_meetings_access {
 	 * request that there must be at least two reviewers for the meeting.
 	 * @param	integer	$meeting	UID of a meeting
 	 * @param	integer	$disclosureType	indicates type of disclosure by constants kDISCLOSRUE_*
-	 * @return	boolean	true iff two reviewers exist
+	 * @return	boolean	true iff meeting information are allowed to be shown
 	 */
 	static function isDisclosed ($meeting, $disclosureType) {
 		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meeting);
 
+		if ($meetingDATA['hidden']==1 || $meetingDATA['deleted']==1 || $meetingDATA['pid']<0)
+            return false;
+		
 		switch ($disclosureType) {
 			case tx_meetings_div::kDISCLOSURE_REVIEWERS: {
-				if ($meetingDATA['reviewer_a'] &&  $meetingDATA['reviewer_b'] && $meetingDATA['hidden']==0)
+				if ($meetingDATA['reviewer_a'] &&  $meetingDATA['reviewer_b'])
 					return true;
 				break;
 			}
 			case tx_meetings_div::kDISCLOSURE_STANDARD: {
-				if ($meetingDATA['hidden']==0)
+				if ($meetingDATA['hidden']==0 )
 					return true;
 				break;
 			}
