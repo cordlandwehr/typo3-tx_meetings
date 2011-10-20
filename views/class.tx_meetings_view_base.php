@@ -264,6 +264,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 
 	function printLinkToPreviousMeeting($protocolUID) {
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);
 
 		// print additional documents for protocols
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
@@ -275,16 +276,19 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 												AND pid >= 0
 											  ORDER BY meeting_date DESC'
 										);
-		if($res && $protocol = mysql_fetch_assoc($res)) {
+		while($res && $protocol = mysql_fetch_assoc($res)) {
+            if (!$this->accessObj->isDisclosed($protocol['uid'], $committeeDATA['disclosure']))
+                continue;
 			$view = t3lib_div::makeInstance(tx_meetings_view_single);
 			$view->setDisplay($this->Display);
 			return $this->printLinkToSingleMeeting($protocol['uid'], $this->pi_getLL('previous_meeting'));
-		} else
-			return '<i>'.$this->pi_getLL('previous_meeting').'</i>';
+		}
+		return '<i>'.$this->pi_getLL('previous_meeting').'</i>';
 	}
 
 	function printLinkToNextMeeting($protocolUID) {
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
+		$committeeDATA = t3lib_BEfunc::getRecord('tx_meetings_committee', $this->committee);
 
 		// print additional documents for protocols
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
@@ -296,12 +300,14 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 												AND pid >= 0
 											  ORDER BY meeting_date ASC'
 										);
-		if($res && $protocol = mysql_fetch_assoc($res)) {
+		while($res && $protocol = mysql_fetch_assoc($res)) {
+		    if (!$this->accessObj->isDisclosed($protocol['uid'], $committeeDATA['disclosure']))
+                continue;
 			$view = t3lib_div::makeInstance(tx_meetings_view_single);
 			$view->setDisplay($this->Display);
 			return $this->printLinkToSingleMeeting($protocol['uid'], $this->pi_getLL('next_meeting'));
-		} else
-			return '<i>'.$this->pi_getLL('next_meeting').'</i>';
+		}
+		return '<i>'.$this->pi_getLL('next_meeting').'</i>';
 	}
 
 	/**
