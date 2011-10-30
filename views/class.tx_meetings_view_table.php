@@ -106,13 +106,22 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 			// TODO dirty hack
 			if ($meetingDATA['not_admitted']==1)
 				$admitted = '<strong>('.$this->pi_getLL('not_admitted').')</strong> ';
-			if ($meetingDATA['protocol']!='' || $meetingDATA['protocol_pdf'])
+			if ($meetingDATA['protocol']!='' || $meetingDATA['protocol_pdf']) {
 				$contentMeetingTable .= $this->pi_linkToPage($this->pi_getLL('meeting-protocol'), $GLOBALS['TSFE']->id.'#meetings_protocol','',
 															array(
 																$this->extKey.'[showUid]' => $meetingDATA['uid'],
 																$this->extKey.'[year]' => $this->year,
 															)).
-								  ' '.$admitted.'<br />';
+								  ' '.$admitted;  
+			}
+			if ($this->accessObj->isAccessAllowedProtocols($meetingDATA['meeting_date']) &&
+				$meetingDATA['type']==tx_meetings_view_base::kPROTOCOL_TYPE_PDF &&
+				$meetingDATA['protocol_pdf']!=''
+				) 
+			{
+				$contentMeetingTable .= ' '.$this->printLinkToProtocolPDF($meetingDATA['uid'], true);
+			}
+			$contentMeetingTable .= '<br />';
 		}
 		if ($this->Display['ShowDocumentsElement']) {
 			$documents = $this->getDocumentsForProtocol($meetingDATA['uid']);

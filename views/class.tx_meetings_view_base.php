@@ -378,7 +378,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 		$protocolDisplayName = $this->pi_getLL('meeting-protocol');
 
 		// output if no PDF exists
-		if ($meetingDATA['document_file']=='') {
+		if ($meetingDATA['protocol_pdf']=='') {
 			if ($onlySymbol)
 				return '<img src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.$this->pi_getLL('file').'" />';
 			else
