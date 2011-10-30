@@ -503,7 +503,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 		if ($text=='')
 			return '';
 		$content = '<pre>'.
-			wordwrap($text, $wordwrap, "\n").	// wrap lines after 120 letters
+			wordwrap(htmlspecialchars($text), $wordwrap, "\n").	// wrap lines after 120 letters
 			'</pre>';
 		return $content;
 	}
