@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Meetings Organizer',
-	'description' => '',
+	'description' => 'This extension allows you to organize dates and data of meetings of several committees, apply access rules, and make everything easily accessable.',
 	'category' => 'plugin',
 	'author' => 'Andreas Cord-Landwehr',
 	'author_email' => 'cola@uni-paderborn.de',
