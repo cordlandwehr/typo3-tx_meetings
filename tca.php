@@ -642,6 +642,9 @@ $TCA['tx_meetings_access_admission'] = array (
 			"label" => "LLL:EXT:meetings/locallang_db.xml:tx_meetings_access_admission.usergroup",
 			"config" => Array (
 				"type" => "select",
+				'items' => array(
+					array('', 0),
+				),
 				"foreign_table" => "fe_groups",
 				"foreign_table_where" => "ORDER BY fe_groups.uid",
 				"size" => 1,
