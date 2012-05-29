@@ -47,6 +47,11 @@ class tx_meetings_access {
 	const kACCESS_LEVEL_INTERN			= 2;
 	const kACCESS_LEVEL_FORBIDDEN		= 3;
 
+	const kACCESS_GRANTED_BY_NO					= 0;
+	const kACCESS_GRANTED_BY_PUBLIC				= 1;
+	const kACCESS_GRANTED_BY_IP					= 2;	// by current ip address of user
+	const kACCESS_GRANTED_BY_GROUP				= 3;	// by group the current user is member of
+
 	private $committeeUID;
 	private $dataAccessLevels = array();
 	private $usersAccessLevels = array();		// the access level of the current user (on different periodes)
@@ -96,7 +101,8 @@ class tx_meetings_access {
 				$this->usersAccessLevels[] = array (
 					'access_level' => $admissionDATA['access_level'],
 					'access_from' => $admissionDATA['access_from'],
-					'access_until' => $admissionDATA['access_until']
+					'access_until' => $admissionDATA['access_until'],
+					'granted_by' => self::kACCESS_GRANTED_BY_IP
 				);
 				continue;	// if IP range ok, no need to check up group
 			}
@@ -106,9 +112,9 @@ class tx_meetings_access {
 				$this->usersAccessLevels[] = array (
 					'access_level' => $admissionDATA['access_level'],
 					'access_from' => $admissionDATA['access_from'],
-					'access_until' => $admissionDATA['access_until']
+					'access_until' => $admissionDATA['access_until'],
+					'granted_by' => self::kACCESS_GRANTED_BY_GROUP
 				);
-				continue;	// if IP range ok, no need to check up group
 			}
 		}
 
@@ -142,27 +148,50 @@ class tx_meetings_access {
 	 * @return	boolean	value that tells if user is allowed to acces given content elmeent or not
 	 */
 	protected function isAccessAllowedGeneral($meetingDate, $contentElement) {
-		// skip on invalid input
-		if ($contentElement=='' || $meetingDate==0)
+		$accessBy = accessAllowedByGeneral($meetingDate, $contentElement);
+		if ($accessBy==self::kACCESS_GRANTED_BY_NO) {
 			return false;
+		}
+		return true;
+	}
 
-		if ($this->dataAccessLevels[$contentElement]==self::kACCESS_LEVEL_PUBLIC)
-			return true;
-		if ($this->dataAccessLevels[$contentElement]==self::kACCESS_LEVEL_FORBIDDEN)
-			return false;
+
+	/**
+	 * General method to identify by which property user has access to data.
+	 * Note that for this it is required to have all access right initalized
+	 * @see init().
+	 *
+	 * @param	integer	$meetingDate	the questioned meeting date
+	 * @param	integer	$contentElement	the content element given by its DB name
+	 * @return	 kACCESS_BY_...
+	 */
+	protected function accessAllowedByGeneral($meetingDate, $contentElement) {
+		// skip on invalid input
+		if ($contentElement=='' || $meetingDate==0) {
+			return self::kACCESS_GRANTED_BY_NO;
+		}
+		if ($this->dataAccessLevels[$contentElement]==self::kACCESS_LEVEL_PUBLIC) {
+			return self::kACCESS_GRANTED_BY_PUBLIC;
+		}
+		if ($this->dataAccessLevels[$contentElement]==self::kACCESS_LEVEL_FORBIDDEN) {
+			return self::kACCESS_GRANTED_BY_NO;
+		}
 
 		foreach ($this->usersAccessLevels as $userAccess) {
 			// first skip rights if they do not apply
-			if ($userAccess['access_from'] > $meetingDate)
+			if ($userAccess['access_from'] > $meetingDate) {
 				continue;
-			if ($userAccess['access_until']!=0 &&  $userAccess['access_until'] < $meetingDate)
+			}
+			if ($userAccess['access_until']!=0 && $userAccess['access_until'] < $meetingDate) {
 				continue;
+			}
 			// now look up rights:
-			if ($userAccess['access_level']>=$this->dataAccessLevels[$contentElement])
-				return true;
+			if ($userAccess['access_level']>=$this->dataAccessLevels[$contentElement]) {
+				return $userAccess['granted_by'];
+			}
 		}
 		// if no access is defined: return false (=no access)
-		return false;
+		return self::kACCESS_GRANTED_BY_NO;
 	}
 
 
@@ -271,7 +300,7 @@ class tx_meetings_access {
 
 		if ($meetingDATA['hidden']==1 || $meetingDATA['deleted']==1 || $meetingDATA['pid']<0)
             return false;
-		
+
 		switch ($disclosureType) {
 			case tx_meetings_div::kDISCLOSURE_REVIEWERS: {
 				if ($meetingDATA['reviewer_a'] &&  $meetingDATA['reviewer_b'])
