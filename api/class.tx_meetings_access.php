@@ -206,6 +206,10 @@ class tx_meetings_access {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_agendas');
 	}
 
+	public function agendaAccessAllowedBy($meetingDate) {
+		return $this->accessAllowedByGeneral($meetingDate, 'access_level_agendas');
+	}
+
 
 	/**
 	 * Indicates if predefined user is allewed to see preliminary agenda from predefined committee
@@ -216,6 +220,11 @@ class tx_meetings_access {
 	 */
 	public function isAccessAllowedAgendaPreliminary($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_agendas_preliminary');
+	}
+
+
+	public function agendaPreliminaryAccessAllowedBy($meetingDate) {
+		return $this->accessAllowedByGeneral($meetingDate, 'access_level_agendas_preliminary');
 	}
 
 
@@ -231,6 +240,11 @@ class tx_meetings_access {
 	}
 
 
+	public function protocolsAccessAllowedBy($meetingDate) {
+		return $this->accessAllowedByGeneral($meetingDate, 'access_level_protocols');
+	}
+
+
 	/**
 	 * Indicates if predefined user is allewed to see preliminary protocols from predefined committee
 	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
@@ -243,34 +257,53 @@ class tx_meetings_access {
 	}
 
 
+	public function protocolsPreliminaryAccessAllowedBy($meetingDate) {
+		return $this->accessAllowedByGeneral($meetingDate, 'access_level_protocols_preliminary');
+	}
+
+
 	/**
-	 * Indicates if predefined user is allewed to see documents from predefined committee
+	 * Indicates if predefined user is allowed to see documents from predefined committee
 	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
 	 * intervals each.
 	 * @param	integer	$meetingDate	indicates the date of a meeting the user requests access
 	 * @return	boolean	returns if preset user is allowed to access
 	 */
 	public function isAccessAllowedDocuments($meetingDate, $documentUID=0) {
+		$accessBy = $this->documentsAccessAllowedBy($meetingDate, $documentUID);
+		if ($accessBy==self::kACCESS_GRANTED_BY_NO) {
+			return false;
+		}
+		return true;
+	}
+
+
+	public function documentsAccessAllowedBy($meetingDate, $documentUID=0) {
 		$documentDATA = t3lib_BEfunc::getRecord('tx_meetings_documents', $documentUID);
 		// if UID missing, or not confidential: standard way
-		if ($documentUID==0 || $documentDATA['access_level']==0)		// this means: use default settings
-			return $this->isAccessAllowedGeneral($meetingDate, 'access_level_documents');
+		if ($documentUID==0 || $documentDATA['access_level']==0) {		// this means: use default settings
+			return $this->accessAllowedByGeneral($meetingDate, 'access_level_documents');
+		}
 		// otherwise inspect the document properties
 		else {
-			if ($this->isAccessAllowedGeneral($meetingDate, 'access_level_documents')==false)
-				return false;
+			if ($this->isAccessAllowedGeneral($meetingDate, 'access_level_documents')==false) {
+				return self::kACCESS_GRANTED_BY_NO;
+			}
 
 			foreach ($this->usersAccessLevels as $userAccess) {
 				// first skip rights if they do not apply
-				if ($userAccess['access_from'] > $meetingDate)
+				if ($userAccess['access_from'] > $meetingDate) {
 					continue;
-				if ($userAccess['access_until']!=0 &&  $userAccess['access_until'] < $meetingDate)
+				}
+				if ($userAccess['access_until']!=0 &&  $userAccess['access_until'] < $meetingDate) {
 					continue;
+				}
 				// now look up rights and ensure to be at least internal
 				if ($userAccess['access_level']>=$this->dataAccessLevels['access_level_documents']
 					&& $userAccess['access_level']>=self::kACCESS_LEVEL_INTERN
-				)
-					return true;
+				) {
+					return $userAccess['granted_by'];
+				}
 			}
 		}
 	}
@@ -286,6 +319,12 @@ class tx_meetings_access {
 	public function isAccessAllowedResolutions($meetingDate) {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_resolutions');
 	}
+
+
+	public function resolutionsAccessAllowedBy($meetingDate) {
+		return $this->accessAllowedByGeneral($meetingDate, 'access_level_resolutions');
+	}
+
 
 	/**
 	 * This static function tells for a given $meeting UID if meeting should be visible. This is done
