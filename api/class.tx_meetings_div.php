@@ -43,6 +43,7 @@ class tx_meetings_div {
 	const imgPath			= 'typo3conf/ext/meetings/images/'; // absolute path to images
 	const extKey			= 'meetings';
 	const uploadFolder		= 'uploads/tx_meetings/';
+	const feExtId			= 'tx_meetings';
 
 	const kDISCLOSURE_STANDARD = 0;
 	const kDISCLOSURE_REVIEWERS = 1;
@@ -56,6 +57,28 @@ class tx_meetings_div {
 
 	const kTERM_KIND_ACADEMIC	= 0;
 	const kTERM_KIND_YEARLY		= 1;
+
+	/**
+	 *	Adds entry in pagecontent wizard form for meetings extension.
+	 */
+	//FIXME use translation
+	function proc(&$wizardItems) {
+		global $BE_USER, $LANG;
+		if ($BE_USER->checkAuthMode('tt_content','',self::extKey,'explicitDeny') != FALSE) {
+			$LL = $LOCAL_LANG;
+			$wizardItems['plugins_'.self::feExtId.'_pi1'] = array(
+				'icon' => t3lib_extMgm::extRelPath(self::extKey).'icon_tx_meetings_list.gif',
+				'title' => 'Show Protocols',
+				'description' => 'Plugin shows protocols of desired committee',
+				'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]='.self::extKey.'_pi1');
+			$wizardItems['plugins_'.self::feExtId.'_pi2'] = array(
+				'icon' => t3lib_extMgm::extRelPath(self::extKey).'icon_tx_meetings_list.gif',
+				'title' => 'Edit Protocols',
+				'description' => 'Plugin shows forms to edit protocols of desired committee',
+				'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]='.self::extKey.'_pi2');
+		}
+		return $wizardItems;
+	}
 
 
 	/**
@@ -98,7 +121,7 @@ class tx_meetings_div {
 	 * @param	array	$pObj	backend page object (not used here!)
 	 * @return	void
 	 */
-	static function printTCAlabelProtocol ($params, $pObj) {
+	static function printTCAlabelProtocol(&$params, &$pObj) {
 		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $params['row']['uid']);
 
 		if ($meetingDATA['protocol_name']!='' && $meetingDATA['protocol_name']!='0')
