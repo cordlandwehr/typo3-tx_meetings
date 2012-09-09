@@ -112,12 +112,12 @@ class tx_meetings_view_table extends tx_meetings_view_base {
 																$this->extKey.'[showUid]' => $meetingDATA['uid'],
 																$this->extKey.'[year]' => $this->year,
 															)).
-								  ' '.$admitted;  
+								  ' '.$admitted;
 			}
 			if ($this->accessObj->isAccessAllowedProtocols($meetingDATA['meeting_date']) &&
 				$meetingDATA['type']==tx_meetings_view_base::kPROTOCOL_TYPE_PDF &&
 				$meetingDATA['protocol_pdf']!=''
-				) 
+				)
 			{
 				$contentMeetingTable .= ' '.$this->printLinkToProtocolPDF($meetingDATA['uid'], true);
 			}

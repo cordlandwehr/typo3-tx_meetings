@@ -43,6 +43,7 @@ class tx_meetings_div {
 	const imgPath			= 'typo3conf/ext/meetings/images/'; // absolute path to images
 	const extKey			= 'meetings';
 	const uploadFolder		= 'uploads/tx_meetings/';
+	const documentFolder	= 'uploads/tx_meetings_documents/';
 
 	const kDISCLOSURE_STANDARD = 0;
 	const kDISCLOSURE_REVIEWERS = 1;
@@ -160,10 +161,11 @@ class tx_meetings_div {
 											WHERE
 												deleted=0 AND hidden=0
 												AND protocol='.$meetingUID.'
-											 ORDER BY sorting, crdate');
+											ORDER BY sorting, crdate');
 
-		while($res && $documentDATA = mysql_fetch_assoc($res))
+		while($res && $documentDATA = mysql_fetch_assoc($res)) {
 			$documents[] = $documentDATA['uid'];
+		}
 
 		return $documents;
 	}
@@ -186,8 +188,9 @@ class tx_meetings_div {
 												AND protocol='.$meetingUID.'
 											 ORDER BY resolution_id, name');
 
-		while($res && $resolutionDATA = mysql_fetch_assoc($res))
+		while($res && $resolutionDATA = mysql_fetch_assoc($res)) {
 			$resolutions[] = $resolutionDATA['uid'];
+		}
 
 		return $resolutions;
 	}

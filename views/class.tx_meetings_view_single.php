@@ -149,9 +149,17 @@ class tx_meetings_view_single extends tx_meetings_view_base {
 					'</p></div>';
 				}
 				// give PDF protocol
-				elseif ($protocolDATA['type']==tx_meetings_view_base::kPROTOCOL_TYPE_PDF && $protocolDATA['protocol_pdf']!='')
-					$content .= '<p>'.$this->pi_getLL('protocol_as_pdf_descr').': <a href="'.tx_meetings_div::uploadFolder.$protocolDATA['protocol_pdf'].'">
+				elseif ($protocolDATA['type']==tx_meetings_view_base::kPROTOCOL_TYPE_PDF && $protocolDATA['protocol_pdf']!='') {
+					$fileAccessObj = t3lib_div::makeInstance("tx_meetings_file_access");
+					$fileAccessObj->init($accessObj);
+
+					$fileUrl = tx_meetings_div::uploadFolder.$protocolDATA['protocol_pdf'];
+					$accessGrant = $accessObj->protocolsAccessAllowedBy($protocolUID);
+					$link = $fileAccessObj->fileLink($fileUrl, $accessGrant);
+
+					$content .= '<p>'.$this->pi_getLL('protocol_as_pdf_descr').': <a href="'.$link.'">
 						'.$this->pi_getLL('meeting-protocol').'</a></p>';
+				}
 			}
 		}
 		else // no protocol exists

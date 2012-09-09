@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Andreas Cord-Landwehr <cola@uni-paderborn.de>
+*  (c) 2008-2013 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -148,7 +148,7 @@ class tx_meetings_access {
 	 * @return	boolean	value that tells if user is allowed to acces given content elmeent or not
 	 */
 	protected function isAccessAllowedGeneral($meetingDate, $contentElement) {
-		$accessBy = accessAllowedByGeneral($meetingDate, $contentElement);
+		$accessBy = $this->accessAllowedByGeneral($meetingDate, $contentElement);
 		if ($accessBy==self::kACCESS_GRANTED_BY_NO) {
 			return false;
 		}
@@ -186,7 +186,7 @@ class tx_meetings_access {
 				continue;
 			}
 			// now look up rights:
-			if ($userAccess['access_level']>=$this->dataAccessLevels[$contentElement]) {
+			if ($userAccess['access_level'] >= $this->dataAccessLevels[$contentElement]) {
 				return $userAccess['granted_by'];
 			}
 		}

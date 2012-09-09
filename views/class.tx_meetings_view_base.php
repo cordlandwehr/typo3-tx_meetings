@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Andreas Cord-Landwehr <cola@uni-paderborn.de>
+*  (c) 2010-2013 Andreas Cord-Landwehr <cola@uni-paderborn.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,6 +38,7 @@ require_once(PATH_t3lib.'class.t3lib_iconworks.php');
 
 require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_div.php');
 require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_access.php');
+require_once(t3lib_extMgm::extPath('meetings').'api/class.tx_meetings_file_access.php');
 require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_list.php');
 require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_table.php');
 require_once(t3lib_extMgm::extPath('meetings').'views/class.tx_meetings_view_resolutions.php');
@@ -342,7 +343,6 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	 **/
 	function printLinkToDocument($documentUID, $onlySymbol=false) {
 		$documentDATA = t3lib_BEfunc::getRecord('tx_meetings_documents', $documentUID);
-
 		$documentDisplayName = $documentDATA['name'];
 
 		// output if no PDF exists
@@ -353,14 +353,22 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 				return '<i>'.$documentDisplayName.'</i>';
 		}
 
+		// create link to PDF
+		$fileAccessObj = t3lib_div::makeInstance("tx_meetings_file_access");
+		$fileAccessObj->init($this->accessObj);
+
+		$fileUrl = tx_meetings_div::uploadFolder.$documentDATA['document_file'];
+		$accessGrant = $this->accessObj->documentsAccessAllowedBy($documentDATA["protocol"]);
+		$link = $fileAccessObj->fileLink($fileUrl, $accessGrant);
+
 		if ($onlySymbol)
-			return '<a href="'.tx_meetings_div::uploadFolder.$documentDATA['document_file'].'" '.
+			return '<a href="'.$link.'" '.
 						'title="'.$documentDATA['name'].
 						($documentDATA['description']!=''? ' - '.$documentDATA['description']: '').'">
 						<img src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.$this->pi_getLL('file').'" />
 						</a>';
 		else
-			return '<a href="'.tx_meetings_div::uploadFolder.$documentDATA['document_file'].'" '.
+			return '<a href="'.$link.'" '.
 						'title="'.$documentDATA['description'].'">'.
 						$documentDisplayName.
 							'</a>';
@@ -374,10 +382,9 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 	 **/
 	function printLinkToProtocolPDF($meetingUID, $onlySymbol=false) {
 		$meetingDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $meetingUID);
-
 		$protocolDisplayName = $this->pi_getLL('meeting-protocol');
 
-		// output if no PDF exists
+		// do not return link if no PDF exists
 		if ($meetingDATA['protocol_pdf']=='') {
 			if ($onlySymbol)
 				return '<img src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.$this->pi_getLL('file').'" />';
@@ -385,13 +392,21 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 				return '<i>'.$protocolDisplayName.'</i>';
 		}
 
+		// create link to PDF
+		$fileAccessObj = t3lib_div::makeInstance("tx_meetings_file_access");
+		$fileAccessObj->init($this->accessObj);
+
+		$fileUrl = tx_meetings_div::uploadFolder.$meetingDATA['protocol_pdf'];
+		$accessGrant = $this->accessObj->protocolsAccessAllowedBy($meetingUID);
+		$link = $fileAccessObj->fileLink($fileUrl, $accessGrant);
+
 		if ($onlySymbol)
-			return '<a href="'.tx_meetings_div::uploadFolder.$meetingDATA['protocol_pdf'].'" '.
+			return '<a href="'.$link.'" '.
 						'title="'.$protocolDisplayName.'">
 						<img src="'.tx_meetings_div::imgPath.'/file_additional.png" alt="'.$this->pi_getLL('file').'" />
 						</a>';
 		else
-			return '<a href="'.tx_meetings_div::uploadFolder.$meetingDATA['protocol_pdf'].'" '.
+			return '<a href="'.$link.'" '.
 						'title="'.$protocolDisplayName.'">'.
 						$protocolDisplayName.
 							'</a>';
@@ -434,13 +449,21 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 		$resolutionDATA = t3lib_BEfunc::getRecord('tx_meetings_resolution', $resolutionUID);
 		$resolutionDisplayName = $this->pi_getLL('resolution').': '.$resolutionDATA['resolution_id'].' '.$resolutionDATA['name'];
 
-		if ($resolutionDATA['resolution_pdf']!='')
-			return '<a href="'.tx_meetings_div::uploadFolder.$resolutionDATA['resolution_pdf'].'" '.
+		if ($resolutionDATA['resolution_pdf'] != '') {
+			// create link to PDF
+			$fileAccessObj = t3lib_div::makeInstance("tx_meetings_file_access");
+			$fileAccessObj->init($this->accessObj);
+
+			$fileUrl = tx_meetings_div::uploadFolder.$resolutionDATA['resolution_pdf'];
+			$accessGrant = $this->accessObj->resolutionsAccessAllowedBy($resolutionDATA["protocol"]);
+			$link = $fileAccessObj->fileLink($fileUrl, $accessGrant);
+
+			return '<a href="'.$link.'" '.
 							'title="'.$resolutionDATA['resolution_id'].'">'.
 							' '.$this->pi_getLL('resolution').': '.$resolutionDATA['resolution_id'].' '.$resolutionDATA['name'].
 							'</a>';
-		// else return link to single view
-		else
+		} // else return link to single view
+		else {
 			return $this->pi_linkTP(
 								$resolutionDisplayName,
 								array(
@@ -448,6 +471,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 								),
 								$this->cache
 						);
+		}
 	}
 
 	function printResolution($resolutionUID) {
