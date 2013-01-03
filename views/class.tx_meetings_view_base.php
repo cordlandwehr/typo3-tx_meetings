@@ -97,7 +97,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 
  		$this->committee = $committee;
 		$this->year = $year;
-		$this->accessObj = t3lib_div::makeInstance(tx_meetings_access);
+		$this->accessObj = t3lib_div::makeInstance("tx_meetings_access");
 		$this->accessObj->init($committee);
 	}
 
@@ -127,6 +127,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 
 	function printSingleProtocol($protocolUID) {
 		$view = t3lib_div::makeInstance(tx_meetings_view_single);
+		$view->init($this->committee, $this->year, $this->conf);
 		$view->setDisplay($this->Display);
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $protocolUID);
 		$content = '<p style="border-top:1px solid; border-bottom:1px solid; padding: 3px;">';
@@ -153,6 +154,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 		$resolutionDATA = t3lib_BEfunc::getRecord('tx_meetings_resolution', $resolutionUID);
 		$protocolDATA = t3lib_BEfunc::getRecord('tx_meetings_list', $resolutionDATA['protocol']);
 		$view = t3lib_div::makeInstance(tx_meetings_view_single_resolution);
+		$view->init($this->committee, $this->year, $this->conf);
 		$view->setDisplay($this->Display);
 		$content = '<p>'.$this->pi_linkTP(
 						'&lt; '.$this->pi_getLL('to_overview'),
@@ -188,6 +190,7 @@ class tx_meetings_view_base extends tx_meetings_pi1 {
 
 		if($resFuture && $protocol = mysql_fetch_assoc($resFuture)) {
 			$view = t3lib_div::makeInstance(tx_meetings_view_single);
+			$view->init($this->committee, $this->year, $this->conf);
 			$view->setDisplay($this->Display);
 			return $view->printProtocol($protocol['uid'], $this->accessObj);
 		}
