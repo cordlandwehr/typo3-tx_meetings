@@ -62,12 +62,13 @@ class tx_meetings_access {
 	 * @param	$integer	$committeeUID	UID of committee
 	 * @return	boolean	returns true IFF success
 	 */
-	function init ($committeeUID) {
+	function init($committeeUID) {
 			// return false if now $committeeUID is given
 			//TODO also return if no committee with this id is present
-		if ($committeeUID==0)
+		if ($committeeUID == 0) {
 			return false;
-		$this->committeeUID=$committeeUID;
+		}
+		$this->committeeUID = $committeeUID;
 		$this->initAccessLevels();
 		$this->evaluateUsersAccessLevels();
 		return true;
