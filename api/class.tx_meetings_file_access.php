@@ -47,7 +47,7 @@ class tx_meetings_file_access {
 	 */
 	function init($accessObj) {
 		// the user-set seed is used to avoid attacks by generating access-ids for known users
-		$this->$salt = 1; // FIXME let user set the seed
+		$this->salt = 1; // FIXME let user set the seed
 		$this->accessObj = $accessObj;
 
 		// set prefix for public access
