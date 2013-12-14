@@ -49,7 +49,8 @@ class tx_meetings_file_access {
 	 */
 	function init($accessObj) {
 		// the user-set seed is used to avoid attacks by generating access-ids for known users
-		$this->salt = 1; // FIXME let user set the seed
+		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['meetings']);
+		$this->salt = $confArr['symlinkGenerationSalt'];
 		$this->accessObj = $accessObj;
 
 		// set prefix for public access

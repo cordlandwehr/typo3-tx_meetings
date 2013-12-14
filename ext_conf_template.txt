@@ -1,2 +1,5 @@
 # cat=basic; type=boolean; label=Use IP based document access protection
 useSymlinkAccessModule = false
+
+# cat=basic; type=int+; label=Symlink creation seed for IP basec document access protection
+symlinkGenerationSalt = 1
