@@ -76,7 +76,6 @@ class tx_meetings_file_access {
 		$forbiddenErrorUrl = "foo.html"; //FIXME
 
 		// create htaccess
-		// FIXME create htaccess
 		if ($createSymlinkFolder) {
 			// test if folder exists and create it
 			mkdir(PATH_site . dirname($link));

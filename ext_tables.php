@@ -106,6 +106,14 @@ $TCA["tx_meetings_access_admission"] = array (
 
 t3lib_div::loadTCA('tt_content');
 
+// add scheduler jobs
+$TYPO3_CONF_VARS['SC_OPTIONS']['scheduler']['tasks']['tx_meetings_cleanup_access_links_scheduler'] = array(
+	'extension' => 'meetings',
+	'title' => 'Cleanup Access Links',
+	'description' => 'Regular cleanups of outdated access links.',
+    'additionalFields' => 'tx_meetings_cleanup_access_links_scheduler'
+);
+
 /* Here starts pi1 */
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1']='layout,select_key';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']='pi_flexform';
