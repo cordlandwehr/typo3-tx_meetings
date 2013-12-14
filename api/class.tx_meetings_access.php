@@ -55,6 +55,7 @@ class tx_meetings_access {
 	private $committeeUID;
 	private $dataAccessLevels = array();
 	private $usersAccessLevels = array();		// the access level of the current user (on different periodes)
+	private $accessIpRange; // IP range used to restrict access (either user based, unrestricted, or by defined range)
 
 	/**
 	 * This function must be run first before using any further function of this
@@ -87,6 +88,7 @@ class tx_meetings_access {
 
 		//setup User's IP
 		$userIP = t3lib_div::getIndpEnv('REMOTE_ADDR');
+		$this->accessIpRange = $userIP; //fallback IP range
 
 		$res =$GLOBALS['TYPO3_DB']->sql_query('SELECT *
 											FROM tx_meetings_access_admission
@@ -105,6 +107,7 @@ class tx_meetings_access {
 					'access_until' => $admissionDATA['access_until'],
 					'granted_by' => self::kACCESS_GRANTED_BY_IP
 				);
+				$this->accessIpRange = $admissionDATA['ip_range'];
 				continue;	// if IP range ok, no need to check up group
 			}
 
@@ -117,11 +120,14 @@ class tx_meetings_access {
 					'granted_by' => self::kACCESS_GRANTED_BY_GROUP
 				);
 			}
+
+			if ($admissionDATA['access_level'] == self::kACCESS_LEVEL_PUBLIC) {
+				$this->accessIpRange = "0.0.0.0/32";
+			}
 		}
 
 		return true;
 	}
-
 
 	/**
 	 * Set up data access levels with initial values as given by committee.
@@ -137,7 +143,6 @@ class tx_meetings_access {
 		$this->dataAccessLevels['access_level_documents'] = $committeeDATA['access_level_documents'];
 		$this->dataAccessLevels['access_level_resolutions'] = $committeeDATA['access_level_resolutions'];
 	}
-
 
 	/**
 	 * General method to check access rights for specific content elements.
@@ -155,7 +160,6 @@ class tx_meetings_access {
 		}
 		return true;
 	}
-
 
 	/**
 	 * General method to identify by which property user has access to data.
@@ -195,7 +199,6 @@ class tx_meetings_access {
 		return self::kACCESS_GRANTED_BY_NO;
 	}
 
-
 	/**
 	 * Indicates if predefined user is allewed to see agenda from predefined committee
 	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
@@ -211,7 +214,6 @@ class tx_meetings_access {
 		return $this->accessAllowedByGeneral($meetingDate, 'access_level_agendas');
 	}
 
-
 	/**
 	 * Indicates if predefined user is allewed to see preliminary agenda from predefined committee
 	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
@@ -223,11 +225,9 @@ class tx_meetings_access {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_agendas_preliminary');
 	}
 
-
 	public function agendaPreliminaryAccessAllowedBy($meetingDate) {
 		return $this->accessAllowedByGeneral($meetingDate, 'access_level_agendas_preliminary');
 	}
-
 
 	/**
 	 * Indicates if predefined user is allewed to see protocols from predefined committee
@@ -240,11 +240,9 @@ class tx_meetings_access {
 		return $this->isAccessAllowedGeneral($meetingDate, 'access_level_protocols');
 	}
 
-
 	public function protocolsAccessAllowedBy($meetingDate) {
 		return $this->accessAllowedByGeneral($meetingDate, 'access_level_protocols');
 	}
-
 
 	/**
 	 * Indicates if predefined user is allewed to see preliminary protocols from predefined committee
@@ -261,7 +259,6 @@ class tx_meetings_access {
 	public function protocolsPreliminaryAccessAllowedBy($meetingDate) {
 		return $this->accessAllowedByGeneral($meetingDate, 'access_level_protocols_preliminary');
 	}
-
 
 	/**
 	 * Indicates if predefined user is allowed to see documents from predefined committee
@@ -309,7 +306,6 @@ class tx_meetings_access {
 		}
 	}
 
-
 	/**
 	 * Indicates if predefined user is allewed to see resolutions from predefined committee
 	 * for a meeting at given $meetingDate. Note that access rights are given for meeting
@@ -325,7 +321,6 @@ class tx_meetings_access {
 	public function resolutionsAccessAllowedBy($meetingDate) {
 		return $this->accessAllowedByGeneral($meetingDate, 'access_level_resolutions');
 	}
-
 
 	/**
 	 * This static function tells for a given $meeting UID if meeting should be visible. This is done
@@ -357,6 +352,9 @@ class tx_meetings_access {
 		}
 	}
 
+	public function ipRangeByGrant() {
+		return $this->accessIpRange;
+	}
 }
 
 // Include extension?
