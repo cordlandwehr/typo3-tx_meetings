@@ -210,8 +210,6 @@ class tx_meetings_file_access {
 
 		$output .= "ErrorDocument 403 " . $errorurl . "\n";
 
-		debug("write to : " . $filepath);
-
 		if(file_put_contents($filepath, $output, LOCK_EX) === false) {
 			return false;
 		}
