@@ -1,0 +1,2 @@
+# cat=basic; type=boolean; label=Use IP based document access protection
+useSymlinkAccessModule = false

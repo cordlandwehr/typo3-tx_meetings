@@ -75,6 +75,13 @@ class tx_meetings_file_access {
 		$createSymlinkFolder = !is_dir(PATH_site . dirname($link));
 		$forbiddenErrorUrl = "foo.html"; //FIXME
 
+		// directly return path if symlink module should not be used
+		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['meetings']);
+		$useSymlinkAccessModule = $confArr['useSymlinkAccessModule'];
+		if ($useSymlinkAccessModule == false) {
+			return $target;
+		}
+
 		// create htaccess
 		if ($createSymlinkFolder) {
 			// test if folder exists and create it
